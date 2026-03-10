@@ -1,0 +1,88 @@
+{
+    "name": "bee-provider-manager",
+    "version": "1.0.0",
+    "description": "Dynamic provider and API key management for BEE Smart AI",
+    "entrypoint": "./src/index.ts",
+    "schema": {
+        "providers": {
+            "type": "array",
+            "description": "List of configured providers with key pools",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Provider identifier (e.g., deepgram, stable-diffusion)"
+                    },
+                    "type": {
+                        "enum": [
+                            "llm",
+                            "voice",
+                            "image",
+                            "video",
+                            "search"
+                        ],
+                        "description": "Provider category"
+                    },
+                    "keys": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Pool of API keys for rotation"
+                    },
+                    "activeKeyIndex": {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "Currently active key index"
+                    },
+                    "fallback": {
+                        "type": "string",
+                        "description": "Fallback provider name"
+                    },
+                    "rotateOnError": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "Auto-rotate key on error 429"
+                    },
+                    "enabled": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "tier_required": {
+                        "enum": [
+                            "basic",
+                            "pro",
+                            "max"
+                        ],
+                        "default": "basic"
+                    }
+                },
+                "required": [
+                    "name",
+                    "type",
+                    "keys"
+                ]
+            }
+        }
+    },
+    "capabilities": {
+        "gatewayRpc": [
+            "provider.list",
+            "provider.rotate",
+            "provider.swap",
+            "provider.add",
+            "provider.remove"
+        ],
+        "httpRoutes": [
+            "/api/providers",
+            "/api/providers/:id/rotate"
+        ],
+        "cliCommands": [
+            "bee keys list",
+            "bee keys rotate",
+            "bee keys add",
+            "bee provider swap"
+        ]
+    }
+}

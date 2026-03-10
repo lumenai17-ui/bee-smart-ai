@@ -1,0 +1,17 @@
+﻿{
+  "id": "A-02",
+  "name": "Post Creator",
+  "description": "Generate and schedule social media posts",
+  "category": "marketing",
+  "version": "1.0.0",
+  "enabled": false,
+  "schedule": {
+    "type": "cron",
+    "expression": "0 9 * * *",
+    "_comment": "Default: daily at 9am, customize per client"
+  },
+  "skills_required": [],
+  "providers_required": [],
+  "tier_minimum": "basic",
+  "config": {}
+}

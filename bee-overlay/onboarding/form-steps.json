@@ -1,0 +1,421 @@
+{
+    "_comment": "BEE Smart AI — Onboarding Form Steps",
+    "version": "2.0.0",
+    "totalSteps": 10,
+    "steps": [
+        {
+            "step": 1,
+            "id": "welcome",
+            "title": "Bienvenido a BEE Smart AI",
+            "description": "Explicación del producto y modelo de skills/APIs",
+            "fields": [],
+            "generates": []
+        },
+        {
+            "step": 2,
+            "id": "identity",
+            "title": "Identidad del Negocio",
+            "description": "Información básica de tu negocio",
+            "fields": [
+                {
+                    "name": "business_name",
+                    "type": "text",
+                    "required": true,
+                    "label": "Nombre del negocio"
+                },
+                {
+                    "name": "business_type",
+                    "type": "select",
+                    "required": true,
+                    "label": "Tipo de negocio",
+                    "options": [
+                        "Restaurante",
+                        "Hotel",
+                        "Tienda",
+                        "Servicios",
+                        "Salud/Fitness",
+                        "Educación",
+                        "Inmobiliaria",
+                        "E-commerce",
+                        "Otro"
+                    ]
+                },
+                {
+                    "name": "business_address",
+                    "type": "text",
+                    "required": true,
+                    "label": "Dirección"
+                },
+                {
+                    "name": "business_hours",
+                    "type": "text",
+                    "required": true,
+                    "label": "Horario de operación"
+                },
+                {
+                    "name": "business_phone",
+                    "type": "tel",
+                    "required": true,
+                    "label": "Teléfono"
+                },
+                {
+                    "name": "business_email",
+                    "type": "email",
+                    "required": true,
+                    "label": "Email de contacto"
+                }
+            ],
+            "generates": [
+                "system-prompt.md"
+            ]
+        },
+        {
+            "step": 3,
+            "id": "branding",
+            "title": "Marca y Personalidad",
+            "description": "Define cómo se ve y habla tu agente",
+            "fields": [
+                {
+                    "name": "color_primary",
+                    "type": "color",
+                    "required": true,
+                    "label": "Color primario"
+                },
+                {
+                    "name": "color_secondary",
+                    "type": "color",
+                    "required": false,
+                    "label": "Color secundario"
+                },
+                {
+                    "name": "color_accent",
+                    "type": "color",
+                    "required": false,
+                    "label": "Color acento"
+                },
+                {
+                    "name": "tone",
+                    "type": "select",
+                    "required": true,
+                    "label": "Tono de comunicación",
+                    "options": [
+                        "Formal",
+                        "Amigable",
+                        "Profesional",
+                        "Casual",
+                        "Entusiasta"
+                    ]
+                },
+                {
+                    "name": "phrases_to_use",
+                    "type": "textarea",
+                    "required": false,
+                    "label": "Frases que el agente DEBE usar"
+                },
+                {
+                    "name": "phrases_to_avoid",
+                    "type": "textarea",
+                    "required": false,
+                    "label": "Frases que el agente NUNCA debe usar"
+                },
+                {
+                    "name": "client_logo",
+                    "type": "file",
+                    "required": false,
+                    "label": "Logo del negocio"
+                }
+            ],
+            "generates": [
+                "theme.json",
+                "system-prompt.md"
+            ]
+        },
+        {
+            "step": 4,
+            "id": "channels",
+            "title": "Canales de Comunicación",
+            "description": "Conecta WhatsApp, Telegram, Email, Discord",
+            "fields": [
+                {
+                    "name": "whatsapp_enabled",
+                    "type": "toggle",
+                    "required": false,
+                    "label": "Habilitar WhatsApp"
+                },
+                {
+                    "name": "whatsapp_phone_id",
+                    "type": "text",
+                    "required": false,
+                    "label": "WhatsApp Phone ID",
+                    "depends_on": "whatsapp_enabled"
+                },
+                {
+                    "name": "whatsapp_access_token",
+                    "type": "password",
+                    "required": false,
+                    "label": "WhatsApp Access Token",
+                    "depends_on": "whatsapp_enabled"
+                },
+                {
+                    "name": "whatsapp_allowlist",
+                    "type": "textarea",
+                    "required": false,
+                    "label": "Números permitidos (uno por línea)",
+                    "depends_on": "whatsapp_enabled"
+                },
+                {
+                    "name": "telegram_enabled",
+                    "type": "toggle",
+                    "required": false,
+                    "label": "Habilitar Telegram"
+                },
+                {
+                    "name": "telegram_bot_token",
+                    "type": "password",
+                    "required": false,
+                    "label": "Telegram Bot Token",
+                    "depends_on": "telegram_enabled"
+                },
+                {
+                    "name": "discord_enabled",
+                    "type": "toggle",
+                    "required": false,
+                    "label": "Habilitar Discord"
+                },
+                {
+                    "name": "discord_bot_token",
+                    "type": "password",
+                    "required": false,
+                    "label": "Discord Bot Token",
+                    "depends_on": "discord_enabled"
+                },
+                {
+                    "name": "email_enabled",
+                    "type": "toggle",
+                    "required": false,
+                    "label": "Habilitar Email"
+                },
+                {
+                    "name": "smtp_host",
+                    "type": "text",
+                    "required": false,
+                    "label": "SMTP Host",
+                    "depends_on": "email_enabled"
+                },
+                {
+                    "name": "operator_contacts",
+                    "type": "textarea",
+                    "required": true,
+                    "label": "Contactos de operadores (nombre, canal, rol)"
+                }
+            ],
+            "generates": [
+                ".env",
+                "allowlist.json",
+                "operator-roles.json",
+                "openclaw.json"
+            ]
+        },
+        {
+            "step": 5,
+            "id": "google_apis",
+            "title": "Google APIs",
+            "description": "Conecta Calendar, Sheets y Maps",
+            "fields": [
+                {
+                    "name": "google_enabled",
+                    "type": "toggle",
+                    "required": false,
+                    "label": "Habilitar Google APIs"
+                },
+                {
+                    "name": "google_client_id",
+                    "type": "text",
+                    "required": false,
+                    "label": "Google Client ID",
+                    "depends_on": "google_enabled"
+                },
+                {
+                    "name": "google_client_secret",
+                    "type": "password",
+                    "required": false,
+                    "label": "Google Client Secret",
+                    "depends_on": "google_enabled"
+                },
+                {
+                    "name": "google_oauth_button",
+                    "type": "oauth",
+                    "required": false,
+                    "label": "Autorizar con Google",
+                    "depends_on": "google_enabled"
+                }
+            ],
+            "generates": [
+                ".env"
+            ],
+            "tier_required": "pro"
+        },
+        {
+            "step": 6,
+            "id": "integrations",
+            "title": "Integraciones",
+            "description": "Conecta WordPress, Meta Ads, Stripe",
+            "fields": [
+                {
+                    "name": "wordpress_enabled",
+                    "type": "toggle",
+                    "required": false,
+                    "label": "Habilitar WordPress"
+                },
+                {
+                    "name": "wordpress_url",
+                    "type": "url",
+                    "required": false,
+                    "label": "URL de WordPress",
+                    "depends_on": "wordpress_enabled"
+                },
+                {
+                    "name": "wordpress_app_password",
+                    "type": "password",
+                    "required": false,
+                    "label": "WordPress App Password",
+                    "depends_on": "wordpress_enabled"
+                },
+                {
+                    "name": "meta_ads_enabled",
+                    "type": "toggle",
+                    "required": false,
+                    "label": "Habilitar Meta Ads"
+                },
+                {
+                    "name": "meta_ads_token",
+                    "type": "password",
+                    "required": false,
+                    "label": "Meta Ads Access Token",
+                    "depends_on": "meta_ads_enabled"
+                },
+                {
+                    "name": "stripe_enabled",
+                    "type": "toggle",
+                    "required": false,
+                    "label": "Habilitar Stripe"
+                },
+                {
+                    "name": "stripe_secret_key",
+                    "type": "password",
+                    "required": false,
+                    "label": "Stripe Secret Key",
+                    "depends_on": "stripe_enabled"
+                }
+            ],
+            "generates": [
+                ".env"
+            ]
+        },
+        {
+            "step": 7,
+            "id": "automations",
+            "title": "Automatizaciones",
+            "description": "Selecciona las automatizaciones para tu tipo de negocio",
+            "fields": [
+                {
+                    "name": "automations_selected",
+                    "type": "checklist",
+                    "required": false,
+                    "label": "Automatizaciones activas",
+                    "source": "context-mapping.json"
+                }
+            ],
+            "generates": [
+                "openclaw.json"
+            ]
+        },
+        {
+            "step": 8,
+            "id": "knowledge_base",
+            "title": "Base de Conocimiento",
+            "description": "Enséñale a BEE todo sobre tu negocio",
+            "fields": [
+                {
+                    "name": "scrape_urls",
+                    "type": "textarea",
+                    "required": false,
+                    "label": "URLs para extraer información (una por línea)"
+                },
+                {
+                    "name": "upload_docs",
+                    "type": "file_multi",
+                    "required": false,
+                    "label": "Subir documentos (Menú, FAQ, Políticas)",
+                    "accept": ".pdf,.doc,.docx,.txt,.xlsx"
+                },
+                {
+                    "name": "special_instructions",
+                    "type": "textarea",
+                    "required": false,
+                    "label": "Instrucciones especiales para el agente"
+                }
+            ],
+            "generates": [
+                "system-prompt.md",
+                "memory-store"
+            ]
+        },
+        {
+            "step": 9,
+            "id": "billing",
+            "title": "Facturación",
+            "description": "Datos fiscales del cliente",
+            "fields": [
+                {
+                    "name": "fiscal_name",
+                    "type": "text",
+                    "required": true,
+                    "label": "Razón social"
+                },
+                {
+                    "name": "tax_id",
+                    "type": "text",
+                    "required": true,
+                    "label": "RFC / Tax ID"
+                },
+                {
+                    "name": "currency",
+                    "type": "select",
+                    "required": true,
+                    "label": "Moneda",
+                    "options": [
+                        "MXN",
+                        "USD",
+                        "EUR",
+                        "COP"
+                    ]
+                },
+                {
+                    "name": "tax_rate",
+                    "type": "number",
+                    "required": true,
+                    "label": "Tasa de impuesto (%)"
+                }
+            ],
+            "generates": [
+                "billing-config.json"
+            ]
+        },
+        {
+            "step": 10,
+            "id": "review",
+            "title": "Revisión y Generación",
+            "description": "Revisa toda la configuración y genera los archivos",
+            "fields": [],
+            "actions": [
+                "review_summary",
+                "generate_all_configs",
+                "download_config_bundle"
+            ],
+            "generates": [
+                "ALL"
+            ]
+        }
+    ]
+}

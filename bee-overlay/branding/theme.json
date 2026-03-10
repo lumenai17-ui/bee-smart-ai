@@ -1,0 +1,28 @@
+{
+    "_comment": "BEE Smart AI — Branding Theme",
+    "_generated_by": "bee onboard (Paso 3)",
+    "product": {
+        "name": "BEE Smart AI",
+        "version": "2.0.0",
+        "logo": "./assets/bee-logo.svg",
+        "favicon": "./assets/bee-favicon.ico"
+    },
+    "client": {
+        "businessName": "{{business_name}}",
+        "logo": "{{client_logo_path}}",
+        "colors": {
+            "primary": "{{color_primary}}",
+            "secondary": "{{color_secondary}}",
+            "accent": "{{color_accent}}",
+            "background": "#0f0f23",
+            "text": "#ffffff"
+        },
+        "tone": "{{tone}}",
+        "toneDescription": "{{tone_description}}"
+    },
+    "gateway_ui": {
+        "title": "{{business_name}} — AI Assistant",
+        "welcomeMessage": "🐝 Bienvenido al panel de {{business_name}}",
+        "showBranding": true
+    }
+}

@@ -1,0 +1,133 @@
+{
+  "$schema": "https://openclaw.ai/schemas/config.json",
+  "version": "2.0.0",
+  "product": "bee-smart-ai",
+
+  "agents": {
+    "defaults": {
+      "name": "BEE Smart AI",
+      "models": [
+        "ollama-cloud/gemma3",
+        "ollama-cloud/llama4"
+      ],
+      "systemPromptFile": "./config/system-prompt.md",
+      "maxTokens": 8192
+    }
+  },
+
+  "models": {
+    "providers": {
+      "ollama-cloud": {
+        "baseUrl": "${OLLAMA_CLOUD_URL}",
+        "apiType": "openai-completions",
+        "apiKeyEnv": "OLLAMA_CLOUD_API_KEY",
+        "models": [
+          {
+            "id": "gemma3",
+            "reasoning": true,
+            "contextWindow": 128000,
+            "cost": { "input": 0.0001, "output": 0.0003 }
+          },
+          {
+            "id": "llama4",
+            "reasoning": true,
+            "contextWindow": 128000,
+            "cost": { "input": 0.0001, "output": 0.0003 }
+          }
+        ]
+      },
+      "openai": {
+        "baseUrl": "https://api.openai.com/v1",
+        "apiType": "openai-completions",
+        "apiKeyEnv": "OPENAI_API_KEY",
+        "enabled": false,
+        "_comment": "Fallback opcional — habilitar si se tiene key"
+      },
+      "anthropic": {
+        "baseUrl": "https://api.anthropic.com",
+        "apiType": "anthropic",
+        "apiKeyEnv": "ANTHROPIC_API_KEY",
+        "enabled": false,
+        "_comment": "Fallback opcional"
+      }
+    }
+  },
+
+  "channels": {
+    "whatsapp": {
+      "enabled": false,
+      "type": "whatsapp-business",
+      "phoneIdEnv": "WHATSAPP_PHONE_ID",
+      "accessTokenEnv": "WHATSAPP_ACCESS_TOKEN",
+      "verifyTokenEnv": "WHATSAPP_VERIFY_TOKEN"
+    },
+    "telegram": {
+      "enabled": false,
+      "type": "telegram",
+      "botTokenEnv": "TELEGRAM_BOT_TOKEN"
+    },
+    "discord": {
+      "enabled": false,
+      "type": "discord",
+      "botTokenEnv": "DISCORD_BOT_TOKEN",
+      "guildIdEnv": "DISCORD_GUILD_ID"
+    },
+    "email": {
+      "enabled": false,
+      "type": "email",
+      "smtpHostEnv": "SMTP_HOST",
+      "smtpUserEnv": "SMTP_USER",
+      "smtpPasswordEnv": "SMTP_PASSWORD",
+      "imapHostEnv": "IMAP_HOST",
+      "imapUserEnv": "IMAP_USER",
+      "imapPasswordEnv": "IMAP_PASSWORD"
+    }
+  },
+
+  "skills": {
+    "load": {
+      "extraDirs": [
+        "./bee-skills"
+      ],
+      "mode": "all_builtin"
+    }
+  },
+
+  "plugins": {
+    "load": [
+      "./bee-plugins/provider-manager",
+      "./bee-plugins/unified-context"
+    ]
+  },
+
+  "automations": {
+    "enabled": [],
+    "configDir": "./bee-automations"
+  },
+
+  "security": {
+    "allowlistFile": "./security/allowlist.json",
+    "blocklistFile": "./security/blocklist.json",
+    "operatorRolesFile": "./security/operator-roles.json",
+    "rateLimitsFile": "./security/rate-limits.json"
+  },
+
+  "gateway": {
+    "host": "127.0.0.1",
+    "port": 18789,
+    "authTokenEnv": "OPENCLAW_GATEWAY_TOKEN",
+    "pairingCodeEnv": "OPENCLAW_PAIRING_CODE"
+  },
+
+  "heartbeat": {
+    "intervalMinutes": 15,
+    "enabled": true
+  },
+
+  "bee": {
+    "tier": "pro",
+    "tierConfigFile": "./bee-overlay/tiers/tier-config.json",
+    "brandingFile": "./bee-overlay/branding/theme.json",
+    "onboardingFile": "./bee-overlay/onboarding/form-steps.json"
+  }
+}

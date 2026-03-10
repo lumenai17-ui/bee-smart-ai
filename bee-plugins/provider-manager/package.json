@@ -1,0 +1,26 @@
+{
+    "name": "bee-provider-manager",
+    "version": "1.0.0",
+    "description": "Dynamic provider and API key management for BEE Smart AI",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "clean": "rm -rf dist"
+    },
+    "openclaw": {
+        "extensions": [
+            "bee-provider-manager"
+        ]
+    },
+    "files": [
+        "dist/",
+        "openclaw.plugin.json"
+    ],
+    "dependencies": {},
+    "devDependencies": {
+        "typescript": "^5.4.0",
+        "@types/node": "^20.0.0"
+    }
+}

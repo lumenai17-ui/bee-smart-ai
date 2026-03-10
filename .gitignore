@@ -1,0 +1,31 @@
+# ═══════════════════════════════════════════
+# BEE Smart AI — .gitignore
+# ═══════════════════════════════════════════
+
+# Credentials (NEVER commit)
+config/.env
+config/.env.*
+!config/.env.template
+vaults/*.vault.json
+
+# Node
+node_modules/
+dist/
+*.tgz
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Runtime data
+data/
+*.sqlite
+*.db

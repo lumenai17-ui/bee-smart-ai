@@ -1,0 +1,17 @@
+﻿{
+  "id": "A-01",
+  "name": "Meta Ads Manager",
+  "description": "Automated Meta/Facebook ads campaign management",
+  "category": "marketing",
+  "version": "1.0.0",
+  "enabled": false,
+  "schedule": {
+    "type": "cron",
+    "expression": "0 9 * * *",
+    "_comment": "Default: daily at 9am, customize per client"
+  },
+  "skills_required": [],
+  "providers_required": [],
+  "tier_minimum": "basic",
+  "config": {}
+}

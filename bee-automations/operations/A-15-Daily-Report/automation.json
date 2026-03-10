@@ -1,0 +1,17 @@
+﻿{
+  "id": "A-15",
+  "name": "Daily Report",
+  "description": "Generate and send daily business reports",
+  "category": "operations",
+  "version": "1.0.0",
+  "enabled": false,
+  "schedule": {
+    "type": "cron",
+    "expression": "0 9 * * *",
+    "_comment": "Default: daily at 9am, customize per client"
+  },
+  "skills_required": [],
+  "providers_required": [],
+  "tier_minimum": "basic",
+  "config": {}
+}

@@ -1,0 +1,17 @@
+﻿{
+  "id": "A-19",
+  "name": "Payment Links",
+  "description": "Generate and send payment links via Stripe",
+  "category": "ecommerce",
+  "version": "1.0.0",
+  "enabled": false,
+  "schedule": {
+    "type": "cron",
+    "expression": "0 9 * * *",
+    "_comment": "Default: daily at 9am, customize per client"
+  },
+  "skills_required": [],
+  "providers_required": [],
+  "tier_minimum": "basic",
+  "config": {}
+}

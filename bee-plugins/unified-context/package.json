@@ -1,0 +1,29 @@
+{
+    "name": "bee-unified-context",
+    "version": "1.0.0",
+    "description": "Cross-channel unified context and memory for BEE Smart AI",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "clean": "rm -rf dist"
+    },
+    "openclaw": {
+        "extensions": [
+            "bee-unified-context"
+        ]
+    },
+    "files": [
+        "dist/",
+        "openclaw.plugin.json"
+    ],
+    "dependencies": {
+        "better-sqlite3": "^11.0.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.4.0",
+        "@types/node": "^20.0.0",
+        "@types/better-sqlite3": "^7.6.0"
+    }
+}

@@ -1,0 +1,51 @@
+{
+    "_comment": "BEE Smart AI — Operator roles and permissions",
+    "_generated_by": "bee onboard (Paso 4)",
+    "operators": [
+        {
+            "name": "Owner",
+            "channel": "dashboard",
+            "auth": "password",
+            "role": "admin",
+            "permissions": [
+                "*"
+            ]
+        }
+    ],
+    "roles": {
+        "admin": {
+            "description": "Full access to all features",
+            "permissions": [
+                "manage_keys",
+                "manage_allowlist",
+                "view_all_chats",
+                "override_agent",
+                "billing",
+                "manage_operators",
+                "manage_skills",
+                "manage_automations"
+            ]
+        },
+        "manager": {
+            "description": "Manage conversations and allowlists",
+            "permissions": [
+                "view_all_chats",
+                "override_agent",
+                "manage_allowlist"
+            ]
+        },
+        "operator": {
+            "description": "View and respond to conversations",
+            "permissions": [
+                "view_all_chats",
+                "override_agent"
+            ]
+        },
+        "viewer": {
+            "description": "Read-only access to dashboards and reports",
+            "permissions": [
+                "view_all_chats"
+            ]
+        }
+    }
+}

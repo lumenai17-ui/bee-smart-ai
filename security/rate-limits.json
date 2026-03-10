@@ -1,0 +1,26 @@
+{
+    "_comment": "BEE Smart AI — Rate limiting per channel/contact",
+    "global": {
+        "maxMessagesPerMinute": 30,
+        "maxMessagesPerHour": 500
+    },
+    "perContact": {
+        "maxMessagesPerMinute": 5,
+        "maxMessagesPerHour": 60,
+        "cooldownMessage": "Un momento, estoy procesando tu solicitud anterior."
+    },
+    "perChannel": {
+        "whatsapp": {
+            "maxMessagesPerMinute": 20
+        },
+        "telegram": {
+            "maxMessagesPerMinute": 30
+        },
+        "discord": {
+            "maxMessagesPerMinute": 30
+        },
+        "email": {
+            "maxMessagesPerMinute": 10
+        }
+    }
+}

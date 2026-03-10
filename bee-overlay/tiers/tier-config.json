@@ -1,0 +1,123 @@
+{
+    "_comment": "BEE Smart AI — Tier Configuration",
+    "tiers": {
+        "basic": {
+            "name": "Basic",
+            "price": 25,
+            "currency": "USD",
+            "skills": {
+                "mode": "all_builtin",
+                "total": 58
+            },
+            "llm": {
+                "provider": "ollama-cloud",
+                "tier": "free"
+            },
+            "multimedia": {
+                "enabled": false
+            },
+            "google_apis": {
+                "enabled": false
+            },
+            "automations": {
+                "max": 3
+            },
+            "infrastructure": "shared",
+            "support": "community",
+            "rateLimits": "moderate"
+        },
+        "pro": {
+            "name": "Pro",
+            "price": 40,
+            "currency": "USD",
+            "skills": {
+                "mode": "all_builtin",
+                "total": 58
+            },
+            "llm": {
+                "provider": "ollama-cloud",
+                "tier": "pro"
+            },
+            "multimedia": {
+                "enabled": true,
+                "providers": [
+                    "deepgram",
+                    "stable-diffusion",
+                    "kling"
+                ]
+            },
+            "google_apis": {
+                "enabled": true,
+                "scopes": [
+                    "calendar",
+                    "sheets",
+                    "maps"
+                ]
+            },
+            "automations": {
+                "max": 10
+            },
+            "infrastructure": "shared",
+            "support": "priority",
+            "rateLimits": "generous"
+        },
+        "max": {
+            "name": "Max",
+            "price": 100,
+            "currency": "USD",
+            "skills": {
+                "mode": "all_builtin",
+                "total": 58
+            },
+            "llm": {
+                "provider": "ollama-cloud",
+                "tier": "pro"
+            },
+            "multimedia": {
+                "enabled": true,
+                "providers": [
+                    "deepgram",
+                    "stable-diffusion",
+                    "kling"
+                ]
+            },
+            "google_apis": {
+                "enabled": true,
+                "scopes": [
+                    "calendar",
+                    "sheets",
+                    "maps"
+                ]
+            },
+            "automations": {
+                "max": 20
+            },
+            "infrastructure": "dedicated_4gb",
+            "support": "24x7_dedicated",
+            "rateLimits": "unlimited"
+        }
+    },
+    "costEstimates": {
+        "basic": {
+            "monthly": 5,
+            "breakdown": {
+                "hosting": 5
+            }
+        },
+        "pro": {
+            "monthly": 22,
+            "breakdown": {
+                "multimedia": 17,
+                "google": 5
+            }
+        },
+        "max": {
+            "monthly": 35,
+            "breakdown": {
+                "multimedia": 17,
+                "google": 5,
+                "dedicated_vps": 13
+            }
+        }
+    }
+}

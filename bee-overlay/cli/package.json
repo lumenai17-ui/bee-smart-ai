@@ -1,0 +1,19 @@
+{
+    "name": "bee-cli",
+    "version": "2.0.0",
+    "description": "BEE Smart AI Command Line Interface",
+    "main": "dist/bee-cli.js",
+    "bin": {
+        "bee": "dist/bee-cli.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "start": "node dist/bee-cli.js"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "typescript": "^5.4.0",
+        "@types/node": "^20.0.0"
+    }
+}

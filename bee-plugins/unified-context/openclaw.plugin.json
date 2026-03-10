@@ -1,0 +1,58 @@
+{
+    "name": "bee-unified-context",
+    "version": "1.0.0",
+    "description": "Cross-channel unified context and memory for BEE Smart AI",
+    "entrypoint": "./src/index.ts",
+    "schema": {
+        "database": {
+            "type": "object",
+            "properties": {
+                "engine": {
+                    "enum": [
+                        "sqlite",
+                        "redis"
+                    ],
+                    "default": "sqlite"
+                },
+                "path": {
+                    "type": "string",
+                    "default": "./data/contacts.db"
+                }
+            }
+        },
+        "contextWindow": {
+            "type": "object",
+            "properties": {
+                "maxMessages": {
+                    "type": "integer",
+                    "default": 50
+                },
+                "summaryAfter": {
+                    "type": "integer",
+                    "default": 100
+                },
+                "includeMetadata": {
+                    "type": "boolean",
+                    "default": true
+                }
+            }
+        }
+    },
+    "capabilities": {
+        "contextEngines": [
+            "unified-contact-context"
+        ],
+        "gatewayRpc": [
+            "context.get",
+            "context.search",
+            "context.summarize"
+        ],
+        "httpRoutes": [
+            "/api/contacts",
+            "/api/contacts/:id/context"
+        ],
+        "backgroundServices": [
+            "context-summarizer-cron"
+        ]
+    }
+}

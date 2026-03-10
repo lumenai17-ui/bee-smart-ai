@@ -1,0 +1,24 @@
+{
+    "_comment": "BEE Smart AI — Allowlist / Blocklist configuration",
+    "_generated_by": "bee onboard (Paso 4)",
+    "mode": "allowlist",
+    "whatsapp": {
+        "allowed_numbers": [],
+        "allow_unknown": true,
+        "unknown_response": "¡Hola! Bienvenido. ¿En qué puedo ayudarte?"
+    },
+    "telegram": {
+        "allowed_usernames": [],
+        "allowed_group_ids": [],
+        "allow_unknown": true
+    },
+    "discord": {
+        "allowed_channel_ids": [],
+        "allowed_role_ids": [],
+        "allow_unknown": true
+    },
+    "email": {
+        "allowed_domains": [],
+        "blocked_addresses": []
+    }
+}

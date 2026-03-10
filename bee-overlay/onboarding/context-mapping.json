@@ -1,0 +1,222 @@
+{
+    "_comment": "BEE Smart AI — Business Type → Automation Mapping",
+    "_source": "BEE Smart AI v2.0 Product Definition",
+    "mappings": {
+        "Restaurante": {
+            "default": [
+                "A-02",
+                "A-12",
+                "A-13",
+                "A-14",
+                "A-15",
+                "A-18"
+            ],
+            "suggested": [
+                "A-04",
+                "A-17",
+                "A-11",
+                "A-20"
+            ]
+        },
+        "Hotel": {
+            "default": [
+                "A-02",
+                "A-04",
+                "A-13",
+                "A-14",
+                "A-15"
+            ],
+            "suggested": [
+                "A-06",
+                "A-11",
+                "A-05",
+                "A-16"
+            ]
+        },
+        "Tienda": {
+            "default": [
+                "A-02",
+                "A-12",
+                "A-17",
+                "A-19",
+                "A-20"
+            ],
+            "suggested": [
+                "A-06",
+                "A-07",
+                "A-11",
+                "A-15"
+            ]
+        },
+        "Servicios": {
+            "default": [
+                "A-02",
+                "A-05",
+                "A-06",
+                "A-12",
+                "A-13",
+                "A-16"
+            ],
+            "suggested": [
+                "A-15",
+                "A-11",
+                "A-07",
+                "A-10"
+            ]
+        },
+        "Salud/Fitness": {
+            "default": [
+                "A-02",
+                "A-13",
+                "A-14",
+                "A-16"
+            ],
+            "suggested": [
+                "A-05",
+                "A-15",
+                "A-06",
+                "A-11"
+            ]
+        },
+        "Educación": {
+            "default": [
+                "A-02",
+                "A-05",
+                "A-10",
+                "A-11"
+            ],
+            "suggested": [
+                "A-06",
+                "A-09",
+                "A-08",
+                "A-15"
+            ]
+        },
+        "Inmobiliaria": {
+            "default": [
+                "A-02",
+                "A-05",
+                "A-06",
+                "A-10",
+                "A-13"
+            ],
+            "suggested": [
+                "A-15",
+                "A-07",
+                "A-03",
+                "A-11"
+            ]
+        },
+        "E-commerce": {
+            "default": [
+                "A-02",
+                "A-12",
+                "A-17",
+                "A-18",
+                "A-19",
+                "A-20"
+            ],
+            "suggested": [
+                "A-01",
+                "A-03",
+                "A-07",
+                "A-05",
+                "A-11"
+            ]
+        },
+        "Otro": {
+            "default": [
+                "A-02",
+                "A-15"
+            ],
+            "suggested": [
+                "A-05",
+                "A-06",
+                "A-12",
+                "A-14"
+            ]
+        }
+    },
+    "automationIndex": {
+        "A-01": {
+            "name": "Meta Ads Manager",
+            "category": "marketing"
+        },
+        "A-02": {
+            "name": "Post Creator",
+            "category": "marketing"
+        },
+        "A-03": {
+            "name": "Social Scheduler",
+            "category": "marketing"
+        },
+        "A-04": {
+            "name": "Google My Business",
+            "category": "marketing"
+        },
+        "A-05": {
+            "name": "SEO Content",
+            "category": "marketing"
+        },
+        "A-06": {
+            "name": "Lead Capture",
+            "category": "marketing"
+        },
+        "A-07": {
+            "name": "Competitor Watch",
+            "category": "marketing"
+        },
+        "A-08": {
+            "name": "WordPress Publisher",
+            "category": "web"
+        },
+        "A-09": {
+            "name": "Blog Autopilot",
+            "category": "web"
+        },
+        "A-10": {
+            "name": "Landing Page Express",
+            "category": "web"
+        },
+        "A-11": {
+            "name": "Newsletter Auto",
+            "category": "web"
+        },
+        "A-12": {
+            "name": "Invoice Autopilot",
+            "category": "operations"
+        },
+        "A-13": {
+            "name": "Appointment Bot",
+            "category": "operations"
+        },
+        "A-14": {
+            "name": "Review Responder",
+            "category": "operations"
+        },
+        "A-15": {
+            "name": "Daily Report",
+            "category": "operations"
+        },
+        "A-16": {
+            "name": "Customer Follow-up",
+            "category": "operations"
+        },
+        "A-17": {
+            "name": "Product Catalog",
+            "category": "ecommerce"
+        },
+        "A-18": {
+            "name": "Order Manager",
+            "category": "ecommerce"
+        },
+        "A-19": {
+            "name": "Payment Links",
+            "category": "ecommerce"
+        },
+        "A-20": {
+            "name": "Inventory Alert",
+            "category": "ecommerce"
+        }
+    }
+}
