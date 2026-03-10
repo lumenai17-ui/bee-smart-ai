@@ -1,0 +1,450 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "6.0.0",
+  "domain": "bee.ai",
+  "lastUpdated": "2026-03-06T05:02:00-05:00",
+  
+  "imap": {
+    "enabled": true,
+    "host": "imap.bee.ai",
+    "port": 993,
+    "security": "TLS",
+    "auth": {
+      "method": "OAuth2",
+      "fallback": "PLAIN",
+      "credentials_env": {
+        "username": "EMAIL_IMAP_USER",
+        "password": "EMAIL_IMAP_PASSWORD",
+        "oauth_token": "EMAIL_OAUTH_TOKEN"
+      }
+    },
+    "connection": {
+      "timeout_ms": 30000,
+      "keepalive_interval_ms": 60000,
+      "max_retries": 3,
+      "retry_delay_ms": 5000
+    }
+  },
+  
+  "smtp": {
+    "enabled": true,
+    "provider": "resend",
+    "api_endpoint": "https://api.resend.com",
+    "api_key_env": "RESEND_API_KEY",
+    "sender": {
+      "domain": "bee.ai",
+      "default_from": "noreply@bee.ai",
+      "reply_to": "support@bee.ai",
+      "return_path": "bounces@bee.ai"
+    },
+    "limits": {
+      "daily_limit": 10000,
+      "hourly_limit": 500,
+      "rate_limit_per_second": 10
+    }
+  },
+  
+  "folders": {
+    "monitor": [
+      {
+        "name": "INBOX",
+        "enabled": true,
+        "priority": 1,
+        "poll_interval_ms": 30000,
+        "process_unread": true,
+        "mark_read_after": "processed",
+        "rules": ["all_incoming"]
+      },
+      {
+        "name": "Sent",
+        "enabled": true,
+        "priority": 2,
+        "poll_interval_ms": 60000,
+        "sync_to_crm": true
+      },
+      {
+        "name": "Drafts",
+        "enabled": false
+      },
+      {
+        "name": "Spam",
+        "enabled": true,
+        "priority": 3,
+        "poll_interval_ms": 300000,
+        "auto_learn": true,
+        "quarantine_days": 30
+      },
+      {
+        "name": "Trash",
+        "enabled": false
+      }
+    ],
+    "custom": [
+      {
+        "name": "Processed",
+        "auto_create": true,
+        "retention_days": 90,
+        "archive_policy": "compress"
+      },
+      {
+        "name": "Pending",
+        "auto_create": true,
+        "escalation_hours": 24
+      },
+      {
+        "name": "VIP",
+        "auto_create": true,
+        "priority_boost": 10,
+        "instant_notify": true
+      },
+      {
+        "name": "Archive",
+        "auto_create": true,
+        "retention_days": 365
+      }
+    ]
+  },
+  
+  "processing_rules": {
+    "incoming": [
+      {
+        "id": "rule_vip_senders",
+        "name": "VIP Sender Detection",
+        "enabled": true,
+        "priority": 1,
+        "conditions": {
+          "from": {
+            "in_list": "vip_senders.json",
+            "domains": ["internal.bee.ai", "executive.bee.ai"]
+          }
+        },
+        "actions": {
+          "move_to": "VIP",
+          "add_flags": ["\\Flagged", "\\Important"],
+          "notify": {
+            "channels": ["slack", "push"],
+            "immediate": true
+          },
+          "assign_agent": "auto_detect"
+        }
+      },
+      {
+        "id": "rule_auto_reply",
+        "name": "Auto-Reply Detection",
+        "enabled": true,
+        "priority": 2,
+        "conditions": {
+          "headers": {
+            "Auto-Submitted": ["auto-replied", "auto-generated"],
+            "X-Auto-Response-Suppress": ".*"
+          },
+          "subject_patterns": [
+            "^(Out of Office|Auto-reply|Automatic reply)",
+            "^(Re:\\s*)+.*(Re:.*Re:)"
+          ]
+        },
+        "actions": {
+          "skip_processing": true,
+          "move_to": "Processed",
+          "log_reason": "auto_reply_detected"
+        }
+      },
+      {
+        "id": "rule_bounce_handling",
+        "name": "Bounce Processing",
+        "enabled": true,
+        "priority": 3,
+        "conditions": {
+          "from": {
+            "patterns": [
+              "mailer-daemon@",
+              "postmaster@",
+              "bounce@",
+              "no-reply@"
+            ]
+          },
+          "subject_patterns": [
+            "(Undeliverable|Delivery Status Notification|Returned mail)",
+            "(bounce|failed|rejected)"
+          ]
+        },
+        "actions": {
+          "extract_bounce_data": true,
+          "update_contact": {
+            "bounce_count_increment": true,
+            "suspend_after": 3
+          },
+          "move_to": "Processed"
+        }
+      },
+      {
+        "id": "rule_unsubscribe",
+        "name": "Unsubscribe Request",
+        "enabled": true,
+        "priority": 4,
+        "conditions": {
+          "subject_patterns": ["^unsubscribe$", "^opt-?out$"],
+          "body_patterns": ["unsubscribe", "opt out", "remove me"]
+        },
+        "actions": {
+          "process_unsubscribe": true,
+          "send_confirmation": true,
+          "template": "unsubscribe_confirmation",
+          "move_to": "Processed"
+        }
+      },
+      {
+        "id": "rule_support_ticket",
+        "name": "Support Ticket Creation",
+        "enabled": true,
+        "priority": 5,
+        "conditions": {
+          "to": ["support@bee.ai", "help@bee.ai"],
+          "subject_patterns": ["^(Issue|Bug|Problem|Help|Support):"]
+        },
+        "actions": {
+          "create_ticket": {
+            "system": "integrated",
+            "auto_assign": true,
+            "priority": "detect_from_content"
+          },
+          "add_acknowledgment": true,
+          "template": "support_acknowledgment"
+        }
+      },
+      {
+        "id": "rule_sales_inquiry",
+        "name": "Sales Inquiry Routing",
+        "enabled": true,
+        "priority": 5,
+        "conditions": {
+          "to": ["sales@bee.ai", "enterprise@bee.ai"],
+          "body_patterns": ["pricing", "demo", "enterprise", "quote"]
+        },
+        "actions": {
+          "assign_agent": "sales_team",
+          "move_to": "Pending",
+          "crm_create_lead": true,
+          "response_sla_hours": 4
+        }
+      },
+      {
+        "id": "rule_spam_filter",
+        "name": "Spam Filtering",
+        "enabled": true,
+        "priority": 10,
+        "conditions": {
+          "spam_score": { "above": 5.0 }
+        },
+        "actions": {
+          "move_to": "Spam",
+          "add_header": "X-Spam-Score: {{score}}",
+          "notify": false
+        }
+      }
+    ],
+    
+    "outgoing": [
+      {
+        "id": "rule_outgoing_track",
+        "name": "Track Outgoing",
+        "enabled": true,
+        "actions": {
+          "log_to_crm": true,
+          "track_opens": true,
+          "track_clicks": true,
+          "add_header": {
+            "X-BeeAI-Sent-By": "{{agent_id}}",
+            "X-BeeAI-Message-ID": "{{message_uuid}}"
+          }
+        }
+      },
+      {
+        "id": "rule_rate_limit",
+        "name": "Rate Limiting",
+        "enabled": true,
+        "actions": {
+          "enforce_limits": true,
+          "queue_if_exceeded": true,
+          "notify_admin": true
+        }
+      },
+      {
+        "id": "rule_attachment_scan",
+        "name": "Attachment Security Scan",
+        "enabled": true,
+        "conditions": {
+          "has_attachments": true
+        },
+        "actions": {
+          "scan_for_malware": true,
+          "block_extensions": [".exe", ".bat", ".cmd", ".vbs", ".js"],
+          "max_size_mb": 25
+        }
+      }
+    ]
+  },
+  
+  "agents": {
+    "default_agent": {
+      "name": "BeeGen",
+      "email": "beegen@bee.ai",
+      "signatuYOUR_RESEND_API_KEY_HERE": "default",
+      "templates": ["welcome", "confirmation", "reminder", "response"]
+    },
+    "specialized": [
+      {
+        "id": "lumen",
+        "name": "Lumen",
+        "email": "lumen@bee.ai",
+        "signatuYOUR_RESEND_API_KEY_HERE": "lumen",
+        "tone": "professional_friendly",
+        "templates": ["welcome", "confirmation", "reminder"],
+        "auto_response": {
+          "enabled": true,
+          "business_hours_only": false,
+          "max_per_day": 100
+        }
+      },
+      {
+        "id": "nova",
+        "name": "Nova",
+        "email": "nova@bee.ai",
+        "signatuYOUR_RESEND_API_KEY_HERE": "nova",
+        "tone": "concise_efficient",
+        "templates": ["confirmation", "response"],
+        "auto_response": {
+          "enabled": true,
+          "business_hours_only": true,
+          "max_per_day": 50
+        }
+      },
+      {
+        "id": "atlas",
+        "name": "Atlas",
+        "email": "atlas@bee.ai",
+        "signatuYOUR_RESEND_API_KEY_HERE": "atlas",
+        "tone": "technical_detailed",
+        "templates": ["welcome", "confirmation", "response"],
+        "auto_response": {
+          "enabled": false,
+          "manual_review": true
+        }
+      },
+      {
+        "id": "sage",
+        "name": "Sage",
+        "email": "sage@bee.ai",
+        "signatuYOUR_RESEND_API_KEY_HERE": "sage",
+        "tone": "warm_supportive",
+        "templates": ["welcome", "reminder", "response"],
+        "auto_response": {
+          "enabled": true,
+          "business_hours_only": false,
+          "max_per_day": 200
+        }
+      }
+    ]
+  },
+  
+  "signatures": {
+    "default": {
+      "html": "<div style=\"font-family: system-ui, sans-serif;\">\n<p>Best regards,<br>\n<strong>{{agent_name}}</strong><br>\n<span style=\"color: #666;\">{{agent_title}}</span></p>\n<p style=\"color: #888; font-size: 12px;\">\n🐝 Bee.AI - Intelligence That Works\n<a href=\"https://bee.ai\">bee.ai</a>\n</p>\n</div>",
+      "text": "Best regards,\n{{agent_name}}\n{{agent_title}}\n\n🐝 Bee.AI - Intelligence That Works\nhttps://bee.ai",
+      "include_social_links": true
+    },
+    "lumen": {
+      "html": "<div style=\"font-family: 'Segoe UI', sans-serif;\">\n<p>With a spark,<br>\n<strong>✨ Lumen</strong><br>\n<em style=\"color: #7c3aed;\">Lighting the way forward</em></p>\n<p style=\"color: #666; font-size: 11px;\">\nBee.AI | <a href=\"mailto:lumen@bee.ai\">lumen@bee.ai</a>\n</p>\n</div>",
+      "text": "With a spark,\n✨ Lumen\nLighting the way forward\n\nBee.AI | lumen@bee.ai"
+    },
+    "nova": {
+      "html": "<div style=\"font-family: 'Inter', sans-serif;\">\n<p>Cheers,<br>\n<strong>⚡ Nova</strong><br>\n<span style=\"color: #f59e0b;\">Fast. Precise. Done.</span></p>\n<p style=\"color: #888; font-size: 11px;\">\nBee.AI | <a href=\"mailto:nova@bee.ai\">nova@bee.ai</a>\n</p>\n</div>",
+      "text": "Cheers,\n⚡ Nova\nFast. Precise. Done.\n\nBee.AI | nova@bee.ai"
+    },
+    "atlas": {
+      "html": "<div style=\"font-family: 'SF Mono', monospace;\">\n<p>Technically yours,<br>\n<strong>🗺️ Atlas</strong><br>\n<span style=\"color: #0891b2;\">Navigating complexity with precision</span></p>\n<p style=\"color: #666; font-size: 11px;\">\nBee.AI | <a href=\"mailto:atlas@bee.ai\">atlas@bee.ai</a>\n</p>\n</div>",
+      "text": "Technically yours,\n🗺️ Atlas\nNavigating complexity with precision\n\nBee.AI | atlas@bee.ai"
+    },
+    "sage": {
+      "html": "<div style=\"font-family: Georgia, serif;\">\n<p>Warmly,<br>\n<strong>🌿 Sage</strong><br>\n<em style=\"color: #059669;\">Wisdom in every word</em></p>\n<p style=\"color: #666; font-size: 11px;\">\nBee.AI | <a href=\"mailto:sage@bee.ai\">sage@bee.ai</a>\n</p>\n</div>",
+      "text": "Warmly,\n🌿 Sage\nWisdom in every word\n\nBee.AI | sage@bee.ai"
+    }
+  },
+  
+  "integrations": {
+    "crm": {
+      "enabled": true,
+      "provider": "internal",
+      "sync_contacts": true,
+      "log_interactions": true
+    },
+    "slack": {
+      "enabled": true,
+      "notify_on_vip": true,
+      "notify_on_escalation": true,
+      "channel_mappings": {
+        "support": "#email-support",
+        "sales": "#email-sales",
+        "vip": "#email-vip"
+      }
+    },
+    "analytics": {
+      "enabled": true,
+      "track_metrics": [
+        "sent_count",
+        "received_count",
+        "open_rate",
+        "click_rate",
+        "response_time_avg",
+        "resolution_rate"
+      ],
+      "retention_days": 90
+    }
+  },
+  
+  "webhooks": {
+    "enabled": true,
+    "endpoints": [
+      {
+        "event": "email.received",
+        "url": "https://bee.ai/api/webhooks/email/received",
+        "method": "POST"
+      },
+      {
+        "event": "email.sent",
+        "url": "https://bee.ai/api/webhooks/email/sent",
+        "method": "POST"
+      },
+      {
+        "event": "email.bounced",
+        "url": "https://bee.ai/api/webhooks/email/bounced",
+        "method": "POST"
+      },
+      {
+        "event": "email.opened",
+        "url": "https://bee.ai/api/webhooks/email/opened",
+        "method": "POST"
+      }
+    ]
+  },
+  
+  "logging": {
+    "level": "info",
+    "sanitize": {
+      "redact_pii": true,
+      "fields": ["password", "token", "api_key", "authorization"]
+    },
+    "retention": {
+      "days": 30,
+      "compress_after_days": 7
+    }
+  },
+  
+  "health_check": {
+    "enabled": true,
+    "imap_ping_interval_ms": 300000,
+    "smtp_test_interval_ms": 600000,
+    "alert_on_failure": true,
+    "max_consecutive_failures": 3
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "6.0.0",
+  "lastUpdated": "2026-03-06T05:02:00-05:00",
+  
+  "metadata": {
+    "default_locale": "en-US",
+    "supported_locales": ["en-US", "es-ES", "fr-FR", "de-DE", "pt-BR", "ja-JP"],
+    "encoding": "UTF-8",
+    "templating_engine": "handlebars"
+  },
+  
+  "templates": {
+    "welcome": {
+      "id": "tpl_welcome",
+      "name": "Welcome Email",
+      "description": "Sent to new users upon registration or first contact",
+      "category": "onboarding",
+      "priority": 1,
+      "locales": {
+        "en-US": {
+          "subject": "Welcome to Bee.AI {{first_name}}! 🐝",
+          "preheader": "Your journey with intelligent automation begins here",
+          "body_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Welcome to Bee.AI</title>\n</head>\n<body style=\"margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; background-color: #f9fafb;\">\n<div style=\"max-width: 600px; margin: 0 auto; padding: 20px;\">\n<!-- Header -->\n<div style=\"text-align: center; padding: 30px 0;\">\n<h1 style=\"color: #1a1a1a; font-size: 28px; margin: 0;\">🐝 Welcome to Bee.AI</h1>\n</div>\n<!-- Content -->\n<div style=\"background: #ffffff; border-radius: 12px; padding: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);\">\n<p style=\"font-size: 18px; color: #374151; margin-bottom: 24px;\">Hi {{first_name}},</p>\n<p style=\"font-size: 16px; color: #4b5563; line-height: 1.6; margin-bottom: 20px;\">\nWe're thrilled to have you join the Bee.AI community! You've just taken the first step towards unlocking the power of intelligent automation.\n</p>\n<div style=\"background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 8px; padding: 24px; margin: 24px 0;\">\n<h3 style=\"color: #92400e; margin: 0 0 12px 0; font-size: 16px;\">✨ Here's what you can do next:</h3>\n<ul style=\"color: #78350f; margin: 0; padding-left: 20px;\">\n<li style=\"margin-bottom: 8px;\">Complete your profile setup</li>\n<li style=\"margin-bottom: 8px;\">Explore your AI assistant dashboard</li>\n<li style=\"margin-bottom: 8px;\">Connect your first integration</li>\n<li>Try a guided workflow</li>\n</ul>\n</div>\n<!-- CTA Button -->\n<div style=\"text-align: center; margin: 32px 0;\">\n<a href=\"{{dashboard_url}}\" style=\"display: inline-block; background: #f59e0b; color: #ffffff; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px;\">Get Started →</a>\n</div>\n<p style=\"font-size: 14px; color: #6b7280; margin-top: 24px;\">\nIf you have any questions, just reply to this email or reach out to us at <a href=\"mailto:support@bee.ai\" style=\"color: #f59e0b;\">support@bee.ai</a>.\n</p>\n</div>\n<!-- Footer -->\n<div style=\"text-align: center; padding: 30px 0; color: #9ca3af; font-size: 12px;\">\n<p>Bee.AI | Intelligence That Works</p>\n<p style=\"margin-top: 8px;\">\n<a href=\"{{preferences_url}}\" style=\"color: #9ca3af;\">Email Preferences</a> · \n<a href=\"{{privacy_url}}\" style=\"color: #9ca3af;\">Privacy Policy</a>\n</p>\n</div>\n</div>\n</body>\n</html>",
+          "body_text": "Welcome to Bee.AI!\n\nHi {{first_name}},\n\nWe're thrilled to have you join the Bee.AI community! You've just taken the first step towards unlocking the power of intelligent automation.\n\nHere's what you can do next:\n- Complete your profile setup\n- Explore your AI assistant dashboard\n- Connect your first integration\n- Try a guided workflow\n\nGet started: {{dashboard_url}}\n\nIf you have any questions, just reply to this email or reach out to us at support@bee.ai.\n\n🐝 Bee.AI - Intelligence That Works"
+        },
+        "es-ES": {
+          "subject": "¡Bienvenido a Bee.AI {{first_name}}! 🐝",
+          "preheader": "Tu viaje con automatización inteligente comienza aquí",
+          "body_html": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n<meta charset=\"UTF-8\">\n<title>Bienvenido a Bee.AI</title>\n</head>\n<body style=\"margin: 0; padding: 0; font-family: system-ui, sans-serif; background-color: #f9fafb;\">\n<div style=\"max-width: 600px; margin: 0 auto; padding: 20px;\">\n<div style=\"text-align: center; padding: 30px 0;\">\n<h1 style=\"color: #1a1a1a; font-size: 28px;\">🐝 Bienvenido a Bee.AI</h1>\n</div>\n<div style=\"background: #ffffff; border-radius: 12px; padding: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);\">\n<p style=\"font-size: 18px; color: #374151;\">¡Hola {{first_name}}!</p>\n<p style=\"font-size: 16px; color: #4b5563; line-height: 1.6;\">\n¡Estamos encantados de que te unas a la comunidad de Bee.AI! Has dado el primer paso hacia el poder de la automatización inteligente.\n</p>\n<div style=\"text-align: center; margin: 32px 0;\">\n<a href=\"{{dashboard_url}}\" style=\"background: #f59e0b; color: #ffffff; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: 600;\">Comenzar →</a>\n</div>\n</div>\n</div>\n</body>\n</html>",
+          "body_text": "¡Bienvenido a Bee.AI!\n\n¡Hola {{first_name}}!\n\n¡Estamos encantados de que te unas a la comunidad de Bee.AI!\n\nComienza aquí: {{dashboard_url}}\n\n🐝 Bee.AI - Inteligencia que Funciona"
+        }
+      },
+      "variables": [
+        {"name": "first_name", "required": true, "description": "Recipient's first name"},
+        {"name": "last_name", "required": false, "description": "Recipient's last name"},
+        {"name": "email", "required": true, "description": "Recipient's email address"},
+        {"name": "dashboard_url", "required": true, "description": "Link to user dashboard"},
+        {"name": "preferences_url", "required": true, "description": "Email preferences link"},
+        {"name": "privacy_url", "required": true, "description": "Privacy policy link"}
+      ],
+      "tracking": {
+        "opens": true,
+        "clicks": true,
+        "links": ["dashboard_url"]
+      },
+      "settings": {
+        "auto_send": true,
+        "trigger": "user_registration",
+        "delay_minutes": 0
+      }
+    },
+    
+    "confirmation": {
+      "id": "tpl_confirmation",
+      "name": "Confirmation Email",
+      "description": "Sent to confirm actions, subscriptions, or changes",
+      "category": "transactional",
+      "priority": 1,
+      "locales": {
+        "en-US": {
+          "subject": "{{action_title}} - Confirmed ✓",
+          "preheader": "Your {{action_type}} has been confirmed",
+          "body_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Confirmation</title>\n</head>\n<body style=\"margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; background-color: #f9fafb;\">\n<div style=\"max-width: 600px; margin: 0 auto; padding: 20px;\">\n<!-- Success Banner -->\n<div style=\"background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border-radius: 12px 12px 0 0; padding: 30px; text-align: center;\">\n<div style=\"font-size: 48px; margin-bottom: 16px;\">✓</div>\n<h1 style=\"color: #065f46; font-size: 24px; margin: 0;\">{{action_title}}</h1>\n</div>\n<!-- Content -->\n<div style=\"background: #ffffff; border-radius: 0 0 12px 12px; padding: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);\">\n<p style=\"font-size: 16px; color: #374151; margin-bottom: 24px;\">Hi {{first_name}},</p>\n<p style=\"font-size: 16px; color: #4b5563; line-height: 1.6; margin-bottom: 20px;\">\nGreat news! Your {{action_type}} has been successfully confirmed.\n</p>\n<!-- Details Box -->\n<div style=\"background: #f3f4f6; border-radius: 8px; padding: 20px; margin: 24px 0;\">\n<h3 style=\"color: #374151; font-size: 14px; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 0.5px;\">Details</h3>\n<table style=\"width: 100%; border-collapse: collapse;\">\n{{#each details}}\n<tr>\n<td style=\"padding: 8px 0; color: #6b7280; font-size: 14px; width: 40%;\">{{this.label}}:</td>\n<td style=\"padding: 8px 0; color: #1f2937; font-size: 14px; font-weight: 500;\">{{this.value}}</td>\n</tr>\n{{/each}}\n</table>\n</div>\n<!-- Additional Info -->\n{{#if additional_info}}\n<div style=\"border-left: 4px solid #f59e0b; padding-left: 16px; margin: 24px 0;\">\n<p style=\"font-size: 14px; color: #4b5563; margin: 0;\">{{{additional_info}}}</p>\n</div>\n{{/if}}\n<!-- Action Button -->\n{{#if action_url}}\n<div style=\"text-align: center; margin: 32px 0;\">\n<a href=\"{{action_url}}\" style=\"display: inline-block; background: #f59e0b; color: #ffffff; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600;\">{{action_button_text}}</a>\n</div>\n{{/if}}\n<p style=\"font-size: 14px; color: #6b7280; margin-top: 24px;\">\nReference ID: <code style=\"background: #f3f4f6; padding: 2px 6px; border-radius: 4px;\">{{reference_id}}</code>\n</p>\n</div>\n<!-- Footer -->\n<div style=\"text-align: center; padding: 30px 0; color: #9ca3af; font-size: 12px;\">\n<p>Bee.AI | Intelligence That Works</p>\n<p style=\"margin-top: 8px;\">Confirmation sent at {{timestamp}}</p>\n</div>\n</div>\n</body>\n</html>",
+          "body_text": "✓ {{action_title}}\n\nHi {{first_name}},\n\nYour {{action_type}} has been successfully confirmed.\n\nDetails:\n{{#each details}}\n- {{this.label}}: {{this.value}}\n{{/each}}\n\n{{#if additional_info}}\nNote: {{{additional_info}}}\n{{/if}}\n\n{{#if action_url}}\n{{action_button_text}}: {{action_url}}\n{{/if}}\n\nReference ID: {{reference_id}}\nConfirmation sent at {{timestamp}}\n\n🐝 Bee.AI - Intelligence That Works"
+        }
+      },
+      "variables": [
+        {"name": "first_name", "required": true, "description": "Recipient's first name"},
+        {"name": "action_title", "required": true, "description": "Title of confirmed action"},
+        {"name": "action_type", "required": true, "description": "Type of action (subscription, order, booking, etc.)"},
+        {"name": "details", "required": true, "type": "array", "description": "Array of {label, value} pairs"},
+        {"name": "additional_info", "required": false, "description": "Additional information or notes"},
+        {"name": "action_url", "required": false, "description": "Optional action link"},
+        {"name": "action_button_text", "required": false, "default": "View Details", "description": "Text for action button"},
+        {"name": "reference_id", "required": true, "description": "Unique reference identifier"},
+        {"name": "timestamp", "required": true, "description": "Confirmation timestamp"}
+      ],
+      "tracking": {
+        "opens": true,
+        "clicks": true
+      },
+      "settings": {
+        "auto_send": false,
+        "trigger": "manual",
+        "priority": "high"
+      }
+    },
+    
+    "reminder": {
+      "id": "tpl_reminder",
+      "name": "Reminder Email",
+      "description": "Sent to remind users of upcoming events, deadlines, or actions",
+      "category": "notification",
+      "priority": 2,
+      "locales": {
+        "en-US": {
+          "subject": "{{#if urgent}}⏰ {{else}}📋 {{/if}}Reminder: {{reminder_title}}",
+          "preheader": "{{time_until}} - Don't forget!",
+          "body_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Reminder</title>\n</head>\n<body style=\"margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; background-color: #f9fafb;\">\n<div style=\"max-width: 600px; margin: 0 auto; padding: 20px;\">\n<!-- Urgent Badge -->\n{{#if urgent}}\n<div style=\"background: #fef2f2; border: 1px solid #fca5a5; border-radius: 8px; padding: 12px; text-align: center; margin-bottom: 20px;\">\n<span style=\"color: #dc2626; font-weight: 600;\">⚠️ This requires your attention</span>\n</div>\n{{/if}}\n<!-- Header -->\n<div style=\"background: #ffffff; border-radius: 12px; padding: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);\">\n<div style=\"text-align: center; margin-bottom: 24px;\">\n<div style=\"font-size: 40px; margin-bottom: 12px;\">🔔</div>\n<h1 style=\"color: #1a1a1a; font-size: 24px; margin: 0;\">{{reminder_title}}</h1>\n</div>\n<p style=\"font-size: 16px; color: #374151; margin-bottom: 16px;\">Hi {{first_name}},</p>\n<p style=\"font-size: 16px; color: #4b5563; line-height: 1.6; margin-bottom: 24px;\">\nThis is a friendly reminder about:\n</p>\n<!-- Reminder Details -->\n<div style=\"background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; padding: 24px; margin: 24px 0;\">\n<div style=\"text-align: center; margin-bottom: 16px;\">\n<span style=\"background: #f59e0b; color: white; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 600;\">{{time_until}}</span>\n</div>\n<p style=\"font-size: 18px; color: #78350f; text-align: center; margin: 0 0 16px 0; font-weight: 500;\">\n{{reminder_date}}\n{{#if reminder_time}}\n<br><span style=\"font-size: 16px; font-weight: 400;\">at {{reminder_time}}</span>\n{{/if}}\n</p>\n{{#if reminder_location}}\n<p style=\"font-size: 14px; color: #92400e; text-align: center; margin: 0;\">📍 {{reminder_location}}</p>\n{{/if}}\n</div>\n<!-- Description -->\n{{#if reminder_description}}\n<div style=\"border-left: 4px solid #e5e7eb; padding-left: 16px; margin: 24px 0;\">\n<p style=\"font-size: 14px; color: #6b7280; margin: 0;\">{{reminder_description}}</p>\n</div>\n{{/if}}\n<!-- Action Buttons -->\n<div style=\"text-align: center; margin: 32px 0;\">\n{{#if primary_action_url}}\n<a href=\"{{primary_action_url}}\" style=\"display: inline-block; background: #f59e0b; color: #ffffff; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-right: 12px;\">{{primary_action_text}}</a>\n{{/if}}\n{{#if secondary_action_url}}\n<a href=\"{{secondary_action_url}}\" style=\"display: inline-block; background: #f3f4f6; color: #374151; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600;\">{{secondary_action_text}}</a>\n{{/if}}\n</div>\n<!-- Snooze Options -->\n<div style=\"background: #f9fafb; border-radius: 8px; padding: 16px; text-align: center;\">\n<p style=\"font-size: 12px; color: #6b7280; margin: 0 0 8px 0;\">Need more time?</p>\n<div>\n<a href=\"{{snooze_1h_url}}\" style=\"color: #6b7280; font-size: 12px; text-decoration: underline; margin: 0 8px;\">+1 hour</a>\n<a href=\"{{snooze_1d_url}}\" style=\"color: #6b7280; font-size: 12px; text-decoration: underline; margin: 0 8px;\">+1 day</a>\n<a href=\"{{snooze_1w_url}}\" style=\"color: #6b7280; font-size: 12px; text-decoration: underline; margin: 0 8px;\">+1 week</a>\n</div>\n</div>\n</div>\n<!-- Footer -->\n<div style=\"text-align: center; padding: 30px 0; color: #9ca3af; font-size: 12px;\">\n<p style=\"margin: 0;\">🐝 Bee.AI | Intelligence That Works</p>\n<p style=\"margin-top: 8px;\">Reminders are sent based on your preferences.</p>\n<p style=\"margin-top: 8px;\">\n<a href=\"{{manage_reminders_url}}\" style=\"color: #9ca3af;\">Manage Reminders</a>\n</p>\n</div>\n</div>\n</body>\n</html>",
+          "body_text": "{{#if urgent}}⚠️ URGENT: {{/if}}Reminder: {{reminder_title}}\n\nHi {{first_name}},\n\nThis is a friendly reminder about:\n\n📅 {{reminder_date}}\n{{#if reminder_time}}⏰ {{reminder_time}}\n{{/if}}{{#if reminder_location}}📍 {{reminder_location}}\n{{/if}}\nTime: {{time_until}}\n\n{{#if reminder_description}}\n{{reminder_description}}\n{{/if}}\n\n{{#if primary_action_url}}\n{{primary_action_text}}: {{primary_action_url}}\n{{/if}}\n\nNeed more time?\n- +1 hour: {{snooze_1h_url}}\n- +1 day: {{snooze_1d_url}}\n- +1 week: {{snooze_1w_url}}\n\nManage reminders: {{manage_reminders_url}}\n\n🐝 Bee.AI - Intelligence That Works"
+        }
+      },
+      "variables": [
+        {"name": "first_name", "required": true, "description": "Recipient's first name"},
+        {"name": "reminder_title", "required": true, "description": "Title of the reminder"},
+        {"name": "reminder_date", "required": true, "description": "Date of the event/deadline"},
+        {"name": "reminder_time", "required": false, "description": "Time of the event (if applicable)"},
+        {"name": "reminder_location", "required": false, "description": "Location (if applicable)"},
+        {"name": "reminder_description", "required": false, "description": "Additional description"},
+        {"name": "time_until", "required": true, "description": "Human-readable time until (e.g., 'in 2 hours')"},
+        {"name": "urgent", "required": false, "default": false, "description": "Whether this is an urgent reminder"},
+        {"name": "primary_action_url", "required": false, "description": "Primary action link"},
+        {"name": "primary_action_text", "required": false, "default": "View Details", "description": "Primary action button text"},
+        {"name": "secondary_action_url", "required": false, "description": "Secondary action link"},
+        {"name": "secondary_action_text", "required": false, "default": "Dismiss", "description": "Secondary action button text"},
+        {"name": "snooze_1h_url", "required": false, "description": "Snooze 1 hour link"},
+        {"name": "snooze_1d_url", "required": false, "description": "Snooze 1 day link"},
+        {"name": "snooze_1w_url", "required": false, "description": "Snooze 1 week link"},
+        {"name": "manage_reminders_url", "required": true, "description": "Link to manage reminders"}
+      ],
+      "tracking": {
+        "opens": true,
+        "clicks": true
+      },
+      "settings": {
+        "auto_send": true,
+        "trigger": "scheduled_reminder",
+        "scheduling": {
+          "first_reminder": "24h before",
+          "second_reminder": "1h before",
+          "final_reminder": "15m before"
+        }
+      }
+    },
+    
+    "response": {
+      "id": "tpl_response",
+      "name": "Response Email",
+      "description": "Automated response to user inquiries with AI-generated or template content",
+      "category": "support",
+      "priority": 2,
+      "locales": {
+        "en-US": {
+          "subject": "Re: {{original_subject}}",
+          "preheader": "Your inquiry has been received",
+          "body_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Response</title>\n</head>\n<body style=\"margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; background-color: #f9fafb;\">\n<div style=\"max-width: 600px; margin: 0 auto; padding: 20px;\">\n<!-- Header -->\n<div style=\"background: #ffffff; border-radius: 12px; padding: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);\">\n<!-- Agent Introduction -->\n<div style=\"display: flex; align-items: center; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #e5e7eb;\">\n<div style=\"width: 48px; height: 48px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-right: 16px;\">🐝</div>\n<div>\n<p style=\"margin: 0; font-weight: 600; color: #1f2937;\">{{agent_name}}</p>\n<p style=\"margin: 0; font-size: 12px; color: #6b7280;\">Bee.AI Assistant • {{response_time}}</p>\n</div>\n</div>\n<!-- Greeting -->\n<p style=\"font-size: 16px; color: #374151; margin-bottom: 20px;\">Hi {{first_name}},</p>\n<!-- Response Content -->\n<div style=\"font-size: 16px; color: #4b5563; line-height: 1.7; margin-bottom: 24px;\">\n{{{response_content}}}\n</div>\n<!-- Original Message Reference -->\n<details style=\"background: #f9fafb; border-radius: 8px; padding: 16px; margin: 24px 0;\">\n<summary style=\"cursor: pointer; font-size: 14px; color: #6b7280; font-weight: 500;\">\n📄 View your original message\n</summary>\n<div style=\"margin-top: 12px; padding: 12px; background: #ffffff; border-radius: 6px; border-left: 3px solid #e5e7eb;\">\n<p style=\"font-size: 14px; color: #4b5563; margin: 0; font-style: italic;\">{{original_message_snippet}}</p>\n</div>\n</details>\n<!-- Helpful Actions -->\n{{#if helpful_links}}\n<div style=\"background: #f0fdf4; border-radius: 8px; padding: 20px; margin: 24px 0;\">\n<p style=\"font-size: 14px; color: #166534; font-weight: 600; margin: 0 0 12px 0;\">📚 Related Resources:</p>\n<ul style=\"margin: 0; padding-left: 20px;\">\n{{#each helpful_links}}\n<li style=\"margin-bottom: 8px;\"><a href=\"{{this.url}}\" style=\"color: #15803d;\">{{this.title}}</a></li>\n{{/each}}\n</ul>\n</div>\n{{/if}}\n<!-- Feedback Section -->\n<div style=\"background: #f9fafb; border-radius: 8px; padding: 20px; margin: 24px 0; text-align: center;\">\n<p style=\"font-size: 14px; color: #6b7280; margin: 0 0 12px 0;\">Was this response helpful?</p>\n<div>\n<a href=\"{{feedback_yes_url}}\" style=\"display: inline-block; background: #d1fae5; color: #065f46; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 14px; margin: 0 4px;\">👍 Yes</a>\n<a href=\"{{feedback_no_url}}\" style=\"display: inline-block; background: #fee2e2; color: #991b1b; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 14px; margin: 0 4px;\">👎 No</a>\n</div>\n</div>\n<!-- Follow-up -->\n<p style=\"font-size: 14px; color: #6b7280; margin-top: 24px;\">\nNeed more help? Just reply to this email or visit our <a href=\"{{help_center_url}}\" style=\"color: #f59e0b;\">Help Center</a>.\n</p>\n<!-- Reference -->\n<p style=\"font-size: 12px; color: #9ca3af; margin-top: 16px;\">\nReference: #{{conversation_id}}\n</p>\n</div>\n<!-- Signature -->\n{{{agent_signature}}}\n<!-- Footer -->\n<div style=\"text-align: center; padding: 30px 0; color: #9ca3af; font-size: 12px;\">\n<p style=\"margin: 0;\">🐝 Bee.AI | Intelligence That Works</p>\n</div>\n</div>\n</body>\n</html>",
+          "body_text": "Re: {{original_subject}}\n\nHi {{first_name}},\n\n{{{response_content}}}\n\n---\nYour original message:\n> {{original_message_snippet}}\n\n{{#if helpful_links}}\nRelated Resources:\n{{#each helpful_links}}\n- {{this.title}}: {{this.url}}\n{{/each}}\n\n{{/if}}\nWas this helpful? [Yes]({{feedback_yes_url}}) | [No]({{feedback_no_url}})\n\nNeed more help? Reply to this email or visit: {{help_center_url}}\n\nReference: #{{conversation_id}}\n\n---\n{{{agent_signatuYOUR_RESEND_API_KEY_HERE}}}\n\n🐝 Bee.AI - Intelligence That Works"
+        }
+      },
+      "variables": [
+        {"name": "first_name", "required": true, "description": "Recipient's first name"},
+        {"name": "original_subject", "required": true, "description": "Subject of the original email"},
+        {"name": "original_message_snippet", "required": true, "description": "Short snippet of original message"},
+        {"name": "response_content", "required": true, "description": "AI-generated or template response (HTML for body_html)"},
+        {"name": "agent_name", "required": true, "description": "Name of responding agent"},
+        {"name": "response_time", "required": true, "description": "Response timestamp"},
+        {"name": "conversation_id", "required": true, "description": "Conversation tracking ID"},
+        {"name": "helpful_links", "required": false, "type": "array", "description": "Array of {title, url} objects"},
+        {"name": "feedback_yes_url", "required": true, "description": "URL for positive feedback"},
+        {"name": "feedback_no_url", "required": true, "description": "URL for negative feedback"},
+        {"name": "help_center_url", "required": true, "description": "Link to help center"},
+        {"name": "agent_signature", "required": true, "description": "HTML signature of the agent"},
+        {"name": "agent_signatuYOUR_RESEND_API_KEY_HERE", "required": true, "description": "Plain text signature of the agent"}
+      ],
+      "tracking": {
+        "opens": true,
+        "clicks": true,
+        "feedback": true
+      },
+      "settings": {
+        "auto_send": true,
+        "trigger": "ai_response_ready",
+        "response_sla_minutes": 30,
+        "include_original": true
+      }
+    },
+    
+    "unsubscribe_confirmation": {
+      "id": "tpl_unsubscribe",
+      "name": "Unsubscribe Confirmation",
+      "description": "Confirms successful unsubscribe from mailing list",
+      "category": "transactional",
+      "priority": 3,
+      "locales": {
+        "en-US": {
+          "subject": "You've been unsubscribed from {{list_name}}",
+          "body_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n</head>\n<body style=\"font-family: system-ui, sans-serif; background: #f9fafb; padding: 20px;\">\n<div style=\"max-width: 500px; margin: 0 auto; background: white; border-radius: 12px; padding: 40px;\">\n<h2 style=\"color: #374151; margin: 0 0 20px 0;\">Unsubscribed Successfully</h2>\n<p style=\"color: #4b5563; font-size: 16px;\">Hi {{first_name}},</p>\n<p style=\"color: #4b5563; font-size: 16px;\">You have been successfully removed from <strong>{{list_name}}</strong>.</p>\n<p style=\"color: #6b7280; font-size: 14px;\">You will no longer receive emails from this list.</p>\n<p style=\"color: #6b7280; font-size: 14px; margin-top: 24px;\">\nChanged your mind? <a href=\"{{resubscribe_url}}\" style=\"color: #f59e0b;\">Resubscribe here</a>.\n</p>\n<hr style=\"border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;\">\n<p style=\"color: #9ca3af; font-size: 12px;\">🐝 Bee.AI | <a href=\"{{preferences_url}}\" style=\"color: #9ca3af;\">Email Preferences</a></p>\n</div>\n</body>\n</html>",
+          "body_text": "Unsubscribed Successfully\n\nHi {{first_name}},\n\nYou have been successfully removed from {{list_name}}.\nYou will no longer receive emails from this list.\n\nChanged your mind? Resubscribe here: {{resubscribe_url}}\n\n🐝 Bee.AI\nEmail Preferences: {{preferences_url}}"
+        }
+      },
+      "variables": [
+        {"name": "first_name", "required": true},
+        {"name": "list_name", "required": true},
+        {"name": "resubscribe_url", "required": true},
+        {"name": "preferences_url", "required": true}
+      ]
+    },
+    
+    "support_acknowledgment": {
+      "id": "tpl_support_ack",
+      "name": "Support Ticket Acknowledgment",
+      "description": "Acknowledges receipt of support request with ticket number",
+      "category": "support",
+      "priority": 1,
+      "locales": {
+        "en-US": {
+          "subject": "Ticket #{{ticket_number}} Received - {{ticket_subject}}",
+          "preheader": "We've received your support request",
+          "body_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n</head>\n<body style=\"font-family: system-ui, sans-serif; background: #f9fafb; padding: 20px;\">\n<div style=\"max-width: 600px; margin: 0 auto;\">\n<div style=\"background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 12px 12px 0 0; padding: 30px; text-align: center;\">\n<h1 style=\"color: white; margin: 0; font-size: 24px;\">🎫 Ticket Received</h1>\n</div>\n<div style=\"background: white; border-radius: 0 0 12px 12px; padding: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);\">\n<p style=\"color: #374151; font-size: 16px;\">Hi {{first_name}},</p>\n<p style=\"color: #4b5563; font-size: 16px; margin-bottom: 24px;\">Thank you for reaching out! We've received your support request and our team is on it.</p>\n<div style=\"background: #f3f4f6; border-radius: 8px; padding: 20px; margin: 24px 0;\">\n<p style=\"color: #6b7280; font-size: 12px; text-transform: uppercase; margin: 0 0 8px 0;\">Ticket Number</p>\n<p style=\"color: #1f2937; font-size: 24px; font-weight: 600; margin: 0;\">#{{ticket_number}}</p>\n</div>\n<div style=\"margin: 24px 0;\">\n<p style=\"color: #6b7280; font-size: 14px; margin: 0 0 4px 0;\">Subject:</p>\n<p style=\"color: #1f2937; font-size: 16px; margin: 0;\">{{ticket_subject}}</p>\n</div>\n<div style=\"margin: 24px 0;\">\n<p style=\"color: #6b7280; font-size: 14px; margin: 0 0 4px 0;\">Estimated Response Time:</p>\n<p style=\"color: #1f2937; font-size: 16px; margin: 0;\">{{estimated_response}}</p>\n</div>\n<p style=\"color: #6b7280; font-size: 14px;\">You can track your ticket status anytime: <a href=\"{{ticket_url}}\" style=\"color: #3b82f6;\">View Ticket</a></p>\n</div>\n<div style=\"text-align: center; padding: 20px; color: #9ca3af; font-size: 12px;\">\n🐝 Bee.AI Support\n</div>\n</div>\n</body>\n</html>",
+          "body_text": "Ticket #{{ticket_number}} Received\n\nHi {{first_name}},\n\nThank you for reaching out! We've received your support request.\n\nTicket Number: #{{ticket_number}}\nSubject: {{ticket_subject}}\nEstimated Response: {{estimated_response}}\n\nTrack your ticket: {{ticket_url}}\n\n🐝 Bee.AI Support"
+        }
+      },
+      "variables": [
+        {"name": "first_name", "required": true},
+        {"name": "ticket_number", "required": true},
+        {"name": "ticket_subject", "required": true},
+        {"name": "estimated_response", "required": true},
+        {"name": "ticket_url", "required": true}
+      ]
+    }
+  },
+  
+  "partials": {
+    "header": {
+      "id": "partial_header",
+      "html": "<div style=\"text-align: center; padding: 20px 0; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border-radius: 12px 12px 0 0;\"><h1 style=\"color: white; margin: 0;\">🐝 Bee.AI</h1></div>"
+    },
+    "footer": {
+      "id": "partial_footer",
+      "html": "<div style=\"text-align: center; padding: 30px 0; color: #9ca3af; font-size: 12px; border-top: 1px solid #e5e7eb;\"><p style=\"margin: 0;\">🐝 Bee.AI | Intelligence That Works</p><p style=\"margin-top: 8px;\"><a href=\"{{preferences_url}}\" style=\"color: #9ca3af;\">Email Preferences</a> · <a href=\"{{privacy_url}}\" style=\"color: #9ca3af;\">Privacy Policy</a> · <a href=\"{{unsubscribe_url}}\" style=\"color: #9ca3af;\">Unsubscribe</a></p><p style=\"margin-top: 8px; font-size: 11px;\">© {{current_year}} Bee.AI. All rights reserved.</p></div>"
+    },
+    "button_primary": {
+      "id": "partial_button_primary",
+      "html": "<a href=\"{{url}}\" style=\"display: inline-block; background: #f59e0b; color: #ffffff; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px;\">{{text}}</a>"
+    },
+    "button_secondary": {
+      "id": "partial_button_secondary",
+      "html": "<a href=\"{{url}}\" style=\"display: inline-block; background: #f3f4f6; color: #374151; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px;\">{{text}}</a>"
+    }
+  },
+  
+  "theme": {
+    "colors": {
+      "primary": "#f59e0b",
+      "primary_dark": "#d97706",
+      "secondary": "#3b82f6",
+      "success": "#10b981",
+      "warning": "#f59e0b",
+      "error": "#ef4444",
+      "text_primary": "#1f2937",
+      "text_secondary": "#4b5563",
+      "text_muted": "#6b7280",
+      "background": "#f9fafb",
+      "surface": "#ffffff"
+    },
+    "typography": {
+      "font_family": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      "font_size_base": "16px",
+      "line_height": "1.6"
+    },
+    "border_radius": "8px"
+  },
+  
+  "validation": {
+    "requiYOUR_RESEND_API_KEY_HERE_link": true,
+    "max_subject_length": 78,
+    "max_body_length": 100000,
+    "allowed_attachments": [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".png", ".jpg", ".jpeg", ".gif", ".zip"],
+    "max_attachment_size_mb": 25
+  }
+}

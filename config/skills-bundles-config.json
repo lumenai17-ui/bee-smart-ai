@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "version": "1.1.0",
+    "fecha": "2026-03-05",
+    "area": "FASE 4 - ÁREA 6 - SKILLS BUNDLES"
+  },
+  "bundles": {
+    "restaurante": {
+      "skills": [
+        {"id": "menu_parse", "name": "Menú Digital", "priority": 1},
+        {"id": "reservations", "name": "Reservas", "priority": 1},
+        {"id": "orders", "name": "Pedidos", "priority": 1},
+        {"id": "hours", "name": "Horarios", "priority": 2},
+        {"id": "delivery", "name": "Delivery", "priority": 2},
+        {"id": "faq_restaurant", "name": "FAQ Restaurante", "priority": 2},
+        {"id": "contact_restaurant", "name": "Contacto", "priority": 3},
+        {"id": "daily_specials", "name": "Especiales del Día", "priority": 3}
+      ],
+      "dependencies_core": ["email_send", "pdf_generate", "calendar", "forms", "location"],
+      "dependencies_optional": ["sms_send", "voice_send"],
+      "setup_time_minutes": 15,
+      "documents_required": ["menu.pdf", "faq.json"]
+    },
+    "hotel": {
+      "skills": [
+        {"id": "rooms", "name": "Habitaciones", "priority": 1},
+        {"id": "reservations_hotel", "name": "Reservas Hotel", "priority": 1},
+        {"id": "services", "name": "Servicios", "priority": 1},
+        {"id": "faq_hotel", "name": "FAQ Hotel", "priority": 2},
+        {"id": "contact_hotel", "name": "Contacto Hotel", "priority": 2},
+        {"id": "location_hotel", "name": "Ubicación y Mapas", "priority": 2}
+      ],
+      "dependencies_core": ["email_send", "calendar", "forms", "location", "pdf_generate"],
+      "dependencies_optional": ["sheets", "sms_send"],
+      "setup_time_minutes": 20,
+      "documents_required": ["habitaciones.json", "servicios.pdf", "faq.json"]
+    },
+    "tienda": {
+      "skills": [
+        {"id": "inventory", "name": "Inventario", "priority": 1},
+        {"id": "products", "name": "Productos", "priority": 1},
+        {"id": "orders_retail", "name": "Pedidos Retail", "priority": 1},
+        {"id": "payments", "name": "Pagos", "priority": 1},
+        {"id": "promotions", "name": "Promociones", "priority": 2},
+        {"id": "faq_retail", "name": "FAQ Tienda", "priority": 2},
+        {"id": "contact_retail", "name": "Contacto Tienda", "priority": 3}
+      ],
+      "dependencies_core": ["email_send", "pdf_generate", "excel_read", "forms", "location"],
+      "dependencies_optional": ["sms_send", "sheets"],
+      "setup_time_minutes": 15,
+      "documents_required": ["productos.xlsx", "categorias.json", "promociones.json"]
+    },
+    "servicios": {
+      "skills": [
+        {"id": "appointments", "name": "Citas", "priority": 1},
+        {"id": "calendar_service", "name": "Calendario", "priority": 1},
+        {"id": "reminders", "name": "Recordatorios", "priority": 1},
+        {"id": "followup", "name": "Seguimiento", "priority": 2},
+        {"id": "faq_services", "name": "FAQ Servicios", "priority": 2},
+        {"id": "contact_services", "name": "Contacto Servicios", "priority": 3}
+      ],
+      "dependencies_core": ["calendar", "forms", "email_send", "cron", "sms_send"],
+      "dependencies_optional": ["sheets", "video_process"],
+      "setup_time_minutes": 20,
+      "documents_required": ["servicios.json", "profesionales.json"]
+    },
+    "generico": {
+      "skills": [
+        {"id": "faq_generic", "name": "FAQ Genérico", "priority": 1},
+        {"id": "contact_generic", "name": "Contacto Genérico", "priority": 1},
+        {"id": "hours_generic", "name": "Horarios Genérico", "priority": 1},
+        {"id": "location_generic", "name": "Ubicación Genérico", "priority": 2},
+        {"id": "general_queries", "name": "Consultas Generales", "priority": 2}
+      ],
+      "dependencies_core": ["pdf_read", "extract_data", "location"],
+      "dependencies_optional": ["email_send", "calendar"],
+      "setup_time_minutes": 10,
+      "documents_required": ["faq.json", "contacto.json"]
+    }
+  },
+  "intents_master": {
+    "menu": ["menú", "carta", "platos", "comida", "qué tienen", "precios", "ver menú", "lista de platos"],
+    "reservas": ["reservar", "mesa", "reservación", "disponibilidad", "para cuántos", "agenda", "turno"],
+    "pedidos": ["pedir", "ordenar", "orden", "quiero", "me trae", "para llevar", "delivery", "carrito"],
+    "horarios": ["horarios", "horario", "a qué hora", "cuándo abren", "cuándo cierran", "atención"],
+    "contacto": ["teléfono", "dirección", "ubicación", "contacto", "dónde están", "cómo llegar", "mapa"],
+    "precios": ["cuánto cuesta", "precio", "tarifa", "costo", "valor", "cuánto sale", "importe"],
+    "delivery": ["delivery", "domicilio", "envío", "llevar", "a domicilio", "zona de entrega"],
+    "faq": ["qué", "cómo", "cuándo", "dónde", "por qué", "cuánto", "información", "ayuda"]
+  },
+  "responses_templates": {
+    "confirmacion": "¡{accion} confirmado/a!\n\n{detalles}\n\n¿Necesitas algo más?",
+    "error": "Lo siento, hubo un problema con {contexto}.\n\n{solucion}\n\n¿Deseas intentar de nuevo?",
+    "no_encontrado": "No encontré '{busqueda}'.\n\nQuizás quisiste decir: {sugerencias}",
+    "solicitar_datos": "Para {accion} necesito:\n\n{datos_requeridos}\n\n¿Me proporcionas esta información?",
+    "saludo": "¡Hola! Bienvenido/a a {negocio}.\n\nSoy {nombYOUR_RESEND_API_KEY_HERE}, tu asistente virtual. ¿En qué puedo ayudarte?",
+    "despedida": "¡Gracias por contactarnos!\n\nSi tienes más preguntas, no dudes en escribirnos.\n\n¡Que tengas un excelente día!"
+  },
+  "documentacion": {
+    "detalle_file": "SKILLS-BUNDLES-DETALLE.md",
+    "config_file": "skills-bundles-config.json",
+    "setup_script": "setup-skills-bundle.sh"
+  }
+}

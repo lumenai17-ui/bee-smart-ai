@@ -1,38 +1,152 @@
 {
   "$schema": "https://openclaw.ai/schemas/config.json",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "product": "bee-smart-ai",
-
   "agents": {
     "defaults": {
       "name": "BEE Smart AI",
-      "models": [
-        "ollama-cloud/gemma3",
-        "ollama-cloud/llama4"
-      ],
+      "model": {
+        "primary": "ollamacloud/glm-5",
+        "fallbacks": [
+          "ollamacloud/kimi-k2.5",
+          "ollamacloud/qwen3.5:397b"
+        ]
+      },
       "systemPromptFile": "./config/system-prompt.md",
-      "maxTokens": 8192
-    }
+      "maxTokens": 16384,
+      "maxConcurrent": 4,
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "model": {
+          "primary": "ollamacloud/glm-5"
+        },
+        "subagents": {
+          "allowAgents": [
+            "main",
+            "thinking",
+            "vision",
+            "coding"
+          ]
+        }
+      },
+      {
+        "id": "thinking",
+        "model": {
+          "primary": "ollamacloud/deepseek-v3.1:671b"
+        },
+        "_comment": "Razonamiento profundo para decisiones complejas"
+      },
+      {
+        "id": "vision",
+        "model": {
+          "primary": "ollamacloud/qwen3-vl:235b"
+        },
+        "_comment": "Análisis de imágenes y video"
+      },
+      {
+        "id": "coding",
+        "model": {
+          "primary": "ollamacloud/qwen3-coder-next"
+        },
+        "_comment": "Generación y ejecución de código"
+      }
+    ]
   },
-
   "models": {
     "providers": {
-      "ollama-cloud": {
-        "baseUrl": "${OLLAMA_CLOUD_URL}",
+      "ollamacloud": {
+        "baseUrl": "https://ollama.com/v1",
         "apiType": "openai-completions",
-        "apiKeyEnv": "OLLAMA_CLOUD_API_KEY",
+        "apiKeyEnv": "OLLAMA_API_KEY",
         "models": [
           {
-            "id": "gemma3",
+            "id": "glm-5",
+            "name": "GLM-5",
             "reasoning": true,
-            "contextWindow": 128000,
-            "cost": { "input": 0.0001, "output": 0.0003 }
+            "contextWindow": 131072,
+            "maxTokens": 16384
           },
           {
-            "id": "llama4",
+            "id": "kimi-k2.5",
+            "name": "Kimi K2.5",
+            "reasoning": false,
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "kimi-k2-thinking",
+            "name": "Kimi K2 Thinking",
             "reasoning": true,
-            "contextWindow": 128000,
-            "cost": { "input": 0.0001, "output": 0.0003 }
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "deepseek-v3.1:671b",
+            "name": "DeepSeek V3.1 671B",
+            "reasoning": true,
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "deepseek-v3.2",
+            "name": "DeepSeek V3.2",
+            "reasoning": true,
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "qwen3-coder-next",
+            "name": "Qwen3 Coder Next",
+            "reasoning": false,
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "qwen3.5:397b",
+            "name": "Qwen3.5 397B",
+            "reasoning": false,
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "qwen3-vl:235b",
+            "name": "Qwen3-VL 235B",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "minimax-m2.5",
+            "name": "MiniMax M2.5",
+            "reasoning": false,
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "gemma3:27b",
+            "name": "Gemma3 27B",
+            "reasoning": false,
+            "contextWindow": 8192,
+            "maxTokens": 4096
+          },
+          {
+            "id": "gemma3:12b",
+            "name": "Gemma3 12B",
+            "reasoning": false,
+            "contextWindow": 8192,
+            "maxTokens": 4096
           }
         ]
       },
@@ -52,25 +166,34 @@
       }
     }
   },
-
   "channels": {
     "whatsapp": {
       "enabled": false,
       "type": "whatsapp-business",
       "phoneIdEnv": "WHATSAPP_PHONE_ID",
       "accessTokenEnv": "WHATSAPP_ACCESS_TOKEN",
-      "verifyTokenEnv": "WHATSAPP_VERIFY_TOKEN"
+      "verifyTokenEnv": "WHATSAPP_VERIFY_TOKEN",
+      "dmPolicy": "pairing",
+      "groupPolicy": "open",
+      "debounceMs": 0,
+      "mediaMaxMb": 50
     },
     "telegram": {
       "enabled": false,
       "type": "telegram",
-      "botTokenEnv": "TELEGRAM_BOT_TOKEN"
+      "botTokenEnv": "TELEGRAM_BOT_TOKEN",
+      "dmPolicy": "pairing",
+      "groupPolicy": "open",
+      "streaming": "partial"
     },
     "discord": {
       "enabled": false,
       "type": "discord",
       "botTokenEnv": "DISCORD_BOT_TOKEN",
-      "guildIdEnv": "DISCORD_GUILD_ID"
+      "guildIdEnv": "DISCORD_GUILD_ID",
+      "dmPolicy": "allowlist",
+      "groupPolicy": "allowlist",
+      "streaming": "off"
     },
     "email": {
       "enabled": false,
@@ -83,51 +206,96 @@
       "imapPasswordEnv": "IMAP_PASSWORD"
     }
   },
-
   "skills": {
     "load": {
       "extraDirs": [
         "./bee-skills"
       ],
       "mode": "all_builtin"
-    }
+    },
+    "bundlesFile": "./config/skills-bundles.json",
+    "bundlesConfigFile": "./config/skills-bundles-config.json"
   },
-
   "plugins": {
     "load": [
       "./bee-plugins/provider-manager",
       "./bee-plugins/unified-context"
     ]
   },
-
   "automations": {
     "enabled": [],
     "configDir": "./bee-automations"
   },
-
   "security": {
     "allowlistFile": "./security/allowlist.json",
     "blocklistFile": "./security/blocklist.json",
     "operatorRolesFile": "./security/operator-roles.json",
     "rateLimitsFile": "./security/rate-limits.json"
   },
-
   "gateway": {
     "host": "127.0.0.1",
     "port": 18789,
+    "mode": "local",
+    "bind": "lan",
     "authTokenEnv": "OPENCLAW_GATEWAY_TOKEN",
-    "pairingCodeEnv": "OPENCLAW_PAIRING_CODE"
+    "pairingCodeEnv": "OPENCLAW_PAIRING_CODE",
+    "controlUi": {
+      "enabled": true,
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://127.0.0.1:18789"
+      ]
+    },
+    "tls": {
+      "enabled": true,
+      "autoGenerate": true
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera_snap",
+        "camera_clip",
+        "screen_record"
+      ]
+    }
   },
-
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": {
+          "enabled": true
+        },
+        "bootstrap-extra-files": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "messages": {
+    "ackReactionScope": "group-all"
+  },
   "heartbeat": {
     "intervalMinutes": 15,
     "enabled": true
   },
-
+  "email": {
+    "templatesFile": "./config/email-templates.json",
+    "configFile": "./config/email-config.json"
+  },
   "bee": {
     "tier": "pro",
     "tierConfigFile": "./bee-overlay/tiers/tier-config.json",
     "brandingFile": "./bee-overlay/branding/theme.json",
-    "onboardingFile": "./bee-overlay/onboarding/form-steps.json"
+    "onboardingFile": "./bee-overlay/onboarding/form-steps.json",
+    "fleetFile": "./config/fleet.json"
   }
 }

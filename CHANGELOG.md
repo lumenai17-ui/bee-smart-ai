@@ -2,6 +2,31 @@
 
 All notable changes to BEE Smart AI will be documented in this file.
 
+## [2.1.0] - 2026-03-10
+
+### 🔀 Fusion with Turnkey v6
+
+**Integrated real content from turnkey-v6 deployment system:**
+
+- **50 real skills** with intents, templated responses, and API mappings (`config/skills-bundles.json`)
+- **11 LLM models** from Ollama Cloud (GLM-5, Kimi K2.5, DeepSeek V3, Qwen3, etc.)
+- **4 specialized agents** — main, thinking (DeepSeek), vision (Qwen3-VL), coding (Qwen3-Coder)
+- **32KB email templates** with dynamic variables (`config/email-templates.json`)
+- **17+ deployment scripts** for pre-flight, user setup, gateway install, identity fleet, bot config, activation (`installer/phases/`)
+- **5 skill documentation files** — detailed skill bundles, habilidades profundas, second brain (`docs/`)
+- **Channel policies** — WhatsApp pairing, Telegram streaming, Discord allowlist
+- **Internal hooks** — boot-md, session-memory, command-logger
+- **Business-type context mapping** — consultoria, ecommerce, agencia, inmobiliaria, etc.
+- **Gateway** — TLS auto-generation, control UI, deny dangerous commands
+
+### 🔒 Security Fixes (v2.0.1)
+
+- `.gitignore` — vaults/, .env, SQLite excluded from git
+- SQL injection prevention — whitelist for `orderBy`, column validation, LIKE escaping
+- Auth middleware — Bearer token on all 11 Provider Manager endpoints
+- `crypto.randomBytes()` replaces insecure `Math.random()` tokens
+- Vault passphrase min 16 chars + `exportPlain` warning
+
 ## [2.0.0] - 2026-03-10
 
 ### 🎉 Initial Release — Full Framework

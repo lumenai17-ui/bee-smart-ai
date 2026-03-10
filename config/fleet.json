@@ -1,0 +1,352 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.3.3",
+    "lastTouchedAt": "2026-03-03T18:30:00.000Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-02-28T11:48:03.869Z",
+    "lastRunVersion": "2026.2.26",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  },
+  "models": {
+    "providers": {
+      "ollamacloud": {
+        "baseUrl": "https://ollama.com/v1",
+        "apiKey": "5df002e9adcc43c58a5766c7b987d05c.p0v9LxxGFkdPdDioG4-PgFMU",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "glm-5",
+            "name": "GLM-5",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "kimi-k2.5",
+            "name": "Kimi K2.5",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "kimi-k2-thinking",
+            "name": "Kimi K2 Thinking",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "deepseek-v3.1:671b",
+            "name": "DeepSeek V3.1 671B",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "deepseek-v3.2",
+            "name": "DeepSeek V3.2",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "qwen3-coder-next",
+            "name": "Qwen3 Coder Next",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "qwen3.5:397b",
+            "name": "Qwen3.5 397B",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "qwen3-vl:235b",
+            "name": "Qwen3-VL 235B",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "minimax-m2.5",
+            "name": "MiniMax M2.5",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "gemma3:27b",
+            "name": "Gemma3 27B",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 8192,
+            "maxTokens": 4096
+          },
+          {
+            "id": "gemma3:12b",
+            "name": "Gemma3 12B",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 8192,
+            "maxTokens": 4096
+          },
+          {
+            "id": "fingpt",
+            "name": "FinGPT",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 8192,
+            "maxTokens": 4096
+          },
+          {
+            "id": "medical",
+            "name": "Medical",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 8192,
+            "maxTokens": 4096
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "ollamacloud/glm-5",
+        "fallbacks": [
+          "ollamacloud/kimi-k2.5",
+          "ollamacloud/qwen3.5:397b"
+        ]
+      },
+      "workspace": "/home/lumen/.openclaw/workspace",
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "model": {
+          "primary": "ollamacloud/glm-5"
+        },
+        "subagents": {
+          "allowAgents": [
+            "main",
+            "thinking",
+            "vision",
+            "coding"
+          ]
+        }
+      },
+      {
+        "id": "thinking",
+        "model": {
+          "primary": "ollamacloud/deepseek-v3.1:671b"
+        }
+      },
+      {
+        "id": "vision",
+        "model": {
+          "primary": "ollamacloud/qwen3-vl:235b"
+        }
+      },
+      {
+        "id": "coding",
+        "model": {
+          "primary": "ollamacloud/qwen3-coder-next"
+        }
+      }
+    ]
+  },
+  "messages": {
+    "ackReactionScope": "group-all"
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": {
+          "enabled": true
+        },
+        "bootstrap-extra-files": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "channels": {
+    "whatsapp": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "selfChatMode": false,
+      "allowFrom": [
+        "+50764301378"
+      ],
+      "groupPolicy": "open",
+      "groups": {
+        "120363405651159045@g.us": {
+          "requireMention": false
+        },
+        "120363424392879100@g.us": {
+          "requireMention": false
+        },
+        "120363423538780483@g.us": {
+          "requireMention": false
+        }
+      },
+      "debounceMs": 0,
+      "mediaMaxMb": 50
+    },
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "botToken": "YOUR_TELEGRAM_BOT_TOKEN_HERE",
+      "groups": {
+        "-1003845093068": {
+          "requireMention": false
+        }
+      },
+      "groupAllowFrom": [
+        "1386691674"
+      ],
+      "groupPolicy": "open",
+      "streaming": "partial"
+    },
+    "discord": {
+      "enabled": true,
+      "token": "YOUR_DISCORD_BOT_TOKEN_HERE",
+      "groupPolicy": "allowlist",
+      "streaming": "off",
+      "dmPolicy": "allowlist",
+      "allowFrom": [
+        "1473760780947034295",
+        "1476647996648329246"
+      ],
+      "guilds": {
+        "1476646963494653987": {
+          "requireMention": false,
+          "users": [
+            "1473760780947034295",
+            "1476647996648329246"
+          ]
+        }
+      }
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "lan",
+    "controlUi": {
+      "enabled": true,
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://127.0.0.1:18789"
+      ],
+      "allowInsecureAuth": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "9bebeb7c2ad6c2156d263a20109010e8df060c88fc97dc0a"
+    },
+    "trustedProxies": [
+      "0.0.0.0/0"
+    ],
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "tls": {
+      "enabled": true,
+      "autoGenerate": true
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera_snap",
+        "camera_clip",
+        "screen_record",
+        "calendar_add",
+        "contacts_add",
+        "reminders_add"
+      ]
+    }
+  },
+  "plugins": {
+    "entries": {
+      "telegram": {
+        "enabled": true
+      },
+      "whatsapp": {
+        "enabled": true
+      },
+      "discord": {
+        "enabled": true
+      }
+    }
+  },
+  "env": {
+    "BLAND_API_KEY": "32556d91-c20c-472a-9545-fcad2c4aed68"
+  }
+}

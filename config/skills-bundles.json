@@ -1,0 +1,880 @@
+{
+  "meta": {
+    "version": "3.1.0",
+    "created": "2026-03-05",
+    "lastUpdated": "2026-03-06T10:50:00.000Z",
+    "description": "Skills Bundles para Super Agente - TURNKEY v6",
+    "phase": "04-identity-fleet",
+    "area": "SKILLS-BUNDLES",
+    "bundles_count": 10,
+    "skills_total": 50
+  },
+
+  "bundles": [
+    {
+      "id": "communication_core",
+      "name": "Comunicación Core",
+      "description": "Capacidades de comunicación esenciales: mensajes directos y email",
+      "category": "comunicacion",
+      "priority": 1,
+      "alwaysWorks": true,
+      "skills": [
+        "email_send",
+        "email_read",
+        "sms_send",
+        "whatsapp_send",
+        "telegram_send",
+        "discord_send"
+      ],
+      "intents": [
+        "Envía un email a",
+        "Mándame un mensaje por WhatsApp",
+        "Contacta por Telegram",
+        "Necesito enviar un SMS",
+        "Revisa mi correo",
+        "¿Tengo emails nuevos?",
+        "Comunícame con",
+        "Escríbele por",
+        "Responde por",
+        "Manda un mensaje",
+        "Envíale un correo",
+        "Contáctalo vía"
+      ],
+      "responses": {
+        "email_sent": "✉️ Email enviado correctamente a {recipient}. ¿Necesitas algo más?",
+        "email_received": "📬 Tienes {count} emails nuevos. ¿Quieres que los resuma?",
+        "sms_sent": "📱 SMS enviado a {phone}. Entregado en {time}s.",
+        " messaging_platform": "💬 Enviando mensaje por {platform}. Confírmame cuando lo reciba.",
+        "no_channel": "No tengo configurado {platform}. ¿Quieres que use otro canal?",
+        "delivery_failed": "⚠️ No se pudo entregar a {recipient}. Error: {error}. ¿Reintentamos?",
+        "multiple_channels": "📱 Tengo {count} canales disponibles. ¿Por cuál prefieres enviar?",
+        "email_draft": "📝 Borrador preparado. Asunto: {subject}. ¿Lo envío o quieres editarlo?"
+      },
+      "requiredApis": [
+        {
+          "name": "resend",
+          "provider": "nosotros",
+          "skills": ["email_send"],
+          "note": "Funciona siempre"
+        },
+        {
+          "name": "imap",
+          "provider": "nosotros",
+          "skills": ["email_read"],
+          "note": "Funciona siempre"
+        },
+        {
+          "name": "twilio",
+          "provider": "nosotros",
+          "skills": ["sms_send"],
+          "note": "Funciona siempre"
+        }
+      ]
+    },
+
+    {
+      "id": "documents_pro",
+      "name": "Documentos Pro",
+      "description": "Creación y manipulación completa de documentos PDF, Word, Excel y presentaciones",
+      "category": "documentos",
+      "priority": 2,
+      "alwaysWorks": true,
+      "skills": [
+        "pdf_generate",
+        "pdf_read",
+        "pdf_edit",
+        "doc_generate",
+        "excel_generate",
+        "excel_read",
+        "presentation_create"
+      ],
+      "intents": [
+        "Crea un PDF",
+        "Genera un documento Word",
+        "Haz una presentación sobre",
+        "Lee este PDF",
+        "Convierte a Excel",
+        "Necesito un reporte en PDF",
+        "Edita este documento",
+        "Extrae datos del PDF",
+        "Convertir a Word",
+        "Exportar a PDF",
+        "Generar factur",
+        "Crear un informe",
+        "Hacer un report",
+        "Excel de",
+        "PowerPoint de",
+        "Slides de",
+        "Documento sobre",
+        "Archivopdf"
+      ],
+      "responses": {
+        "pdf_created": "📄 PDF creado: {filename}. Encontrarás {pages} páginas con {content_type}.",
+        "pdf_read": "📖 Analicé el PDF. Contiene {pages} páginas. Resumen: {summary}",
+        "doc_created": "📝 Documento Word generado: {filename}. Formato: {format_style}.",
+        "excel_created": "📊 Excel creado: {filename}. {rows} filas, {columns} columnas.",
+        "presentation_created": "🖼️ Presentación lista: {filename}. {slides} slides con diseño {template}.",
+        "extract_failed": "⚠️ No pude extraer los datos. El documento parece estar protegido o corrupto.",
+        "processing_large": "⏳ Procesando documento grande... {progress}% completado.",
+        "template_suggest": "🎨 Tengo {count} plantillas disponibles para {doc_type}. ¿Cuál prefieres?",
+        "format_converted": "🔄 Convertido de {from_format} a {to_format}. Archivo: {filename}."
+      },
+      "requiredApis": [
+        {
+          "name": "pdf_co",
+          "provider": "nosotros",
+          "skills": ["pdf_generate", "pdf_edit", "doc_generate", "excel_generate"],
+          "note": "Funciona siempre"
+        },
+        {
+          "name": "mathpix",
+          "provider": "nosotros",
+          "skills": ["pdf_read", "excel_read"],
+          "note": "Funciona siempre"
+        },
+        {
+          "name": "gamma",
+          "provider": "nosotros",
+          "skills": ["presentation_create"],
+          "note": "Funciona siempre"
+        }
+      ]
+    },
+
+    {
+      "id": "multimedia_creative",
+      "name": "Multimedia Creative",
+      "description": "Creación y procesamiento de contenido multimedia: imágenes, videos y audio",
+      "category": "multimedia",
+      "priority": 3,
+      "alwaysWorks": false,
+      "skills": [
+        "image_receive",
+        "image_generate",
+        "image_edit",
+        "video_process",
+        "video_edit",
+        "video_create",
+        "audio_transcribe",
+        "audio_generate"
+      ],
+      "intents": [
+        "Genera una imagen de",
+        "Edita esta foto",
+        "Procesa el video",
+        "Transcribe este audio",
+        "Crea un video con",
+        "¿Qué hay en esta imagen?",
+        "Haz música con",
+        "Convierte video a",
+        "Dibuja",
+        "Crea una imagen",
+        "Modifica la imagen",
+        "Edita el video",
+        "Genera audio",
+        "Convierte a mp3",
+        "Añade música",
+        "Subtítulos al video",
+        "Foto de",
+        "Imagen de"
+      ],
+      "responses": {
+        "image_created": "🎨 Imagen generada: {description}. Estilo: {style}. ¿Quieres ajustarla?",
+        "image_analyzed": "📸 Análisis completo: {objects} detectados. Contexto: {context}.",
+        "video_processing": "🎬 Procesando video... {progress}% completado. Tiempo estimado: {eta}.",
+        "audio_transcribed": "🎙️ Transcripción lista: {words} palabras, {duration} de audio.",
+        "creative_suggest": "💡 Tengo {count} opciones creativas para tu proyecto. ¿Quieres verlas?",
+        "api_missing": "⚠️ Esta función requiere {api}. Ve a Configuración > APIs para activarla.",
+        "style_applied": "🖌️ Estilo '{style}' aplicado. Variaciones: {variations}.",
+        "render_time": "⏱️ Tiempo de render: {time}. Calidad: {quality}.",
+        "transcription_ready": "📝 Texto extraído ({language}):\n\n{text_preview}..."
+      },
+      "requiredApis": [
+        {
+          "name": "ollama",
+          "provider": "cliente",
+          "skills": ["image_receive", "video_process"],
+          "required": true,
+          "note": "OBLIGATORIO para análisis de imágenes/video"
+        },
+        {
+          "name": "openai_dalle",
+          "provider": "cliente",
+          "skills": ["image_generate", "image_edit"],
+          "required": false,
+          "note": "Optional para generar/editar imágenes"
+        },
+        {
+          "name": "openai_tts",
+          "provider": "cliente",
+          "skills": ["audio_transcribe", "audio_generate"],
+          "required": false,
+          "note": "Opcional para voz/audio"
+        },
+        {
+          "name": "runway",
+          "provider": "cliente",
+          "skills": ["video_create"],
+          "required": false,
+          "note": "Opcional para crear videos"
+        },
+        {
+          "name": "suno",
+          "provider": "cliente",
+          "skills": ["audio_generate"],
+          "required": false,
+          "note": "Opcional para música"
+        }
+      ],
+      "muxIntegration": {
+        "provider": "nosotros",
+        "skills": ["video_edit"],
+        "limit": "100 videos/mes"
+      }
+    },
+
+    {
+      "id": "productivity_plus",
+      "name": "Productividad Plus",
+      "description": "Herramientas de productividad: resumen, traducción, extracción de datos y análisis de sentimiento",
+      "category": "productividad",
+      "priority": 4,
+      "alwaysWorks": true,
+      "skills": [
+        "summarize",
+        "translate",
+        "extract_data",
+        "sentiment",
+        "ocr",
+        "qrcode_generate",
+        "qrcode_read"
+      ],
+      "intents": [
+        "Resume este texto",
+        "Traduce al inglés",
+        "Extrae los datos de",
+        "¿Cómo se siente el autor?",
+        "Lee el texto de esta imagen",
+        "Genera un código QR",
+        "Escanea este QR",
+        "Analiza el sentimiento",
+        "Resumen de",
+        "Traducir a",
+        "Qué dice esto",
+        "Analizar texto",
+        "Extraer información",
+        "Sentimiento de",
+        "Crear QR",
+        "Leer QR",
+        "Convierte a texto"
+      ],
+      "responses": {
+        "summarized": "📋 Resumen ({words} palabras → {summary_words}): {summary}",
+        "translated": "🌐 Traducido a {language}: {translated_text}",
+        "data_extracted": "📊 Datos extraídos: {fields} campos identificados. {accuracy}% de confianza.",
+        "sentiment_analysis": "😊 Sentimiento: {sentiment} ({confidence}% confianza). Emociones detectadas: {emotions}.",
+        "qr_created": "📱 QR generado: {type}. Escanea con tu cámara para {action}.",
+        "ocr_complete": "📝 Texto extraído: {chars} caracteres, {language} detectado.",
+        "summary_long": "📄 {summary}\n\nPuntos clave:\n{bullet_points}",
+        "translation_failed": "⚠️ No pude traducir. ¿El texto está en {detected_lang}?",
+        "extraction_fields": "📋 Campos disponibles:\n{fields_list}\n\n¿Cuáles necesitas?",
+        "qr_type_options": "📱 Tipos de QR disponibles:\n• URL\n• Texto\n• Contacto\n• WiFi\n• Evento\n\n¿Cuál necesitas?"
+      },
+      "requiredApis": [
+        {
+          "name": "ollama",
+          "provider": "cliente",
+          "skills": ["summarize", "extract_data", "sentiment", "ocr"],
+          "required": true,
+          "note": "OBLIGATORIO para análisis"
+        },
+        {
+          "name": "deepl",
+          "provider": "cliente",
+          "skills": ["translate"],
+          "required": false,
+          "note": "Opcional - 500K chars gratis/mes"
+        }
+      ],
+      "internalTools": {
+        "qrcode": {
+          "provider": "sistema",
+          "skills": ["qrcode_generate", "qrcode_read"],
+          "note": "Funciona siempre"
+        }
+      }
+    },
+
+    {
+      "id": "automation_power",
+      "name": "Automatización Power",
+      "description": "Automatización avanzada: navegador, webhooks, tareas programadas y web scraping",
+      "category": "automatizacion",
+      "priority": 5,
+      "alwaysWorks": true,
+      "skills": [
+        "browser",
+        "webhook",
+        "cron",
+        "scraping",
+        "forms"
+      ],
+      "intents": [
+        "Navega a esta web",
+        "Programa una tarea",
+        "Crea un webhook",
+        "Extrae datos de esta web",
+        "Automatiza este proceso",
+        "Monitorea esta página",
+        "Configura un recordatorio",
+        "Haz esto cada día",
+        "Abre navegador",
+        "Automatizar",
+        "Webhook para",
+        "Scrapear",
+        "Monitoreo",
+        "Tarea programada",
+        "Repetir cada",
+        "Recordarme",
+        "Ejecutar automáticamente"
+      ],
+      "responses": {
+        "browser_action": "🌐 Navegación completada. {actions} acciones ejecutadas en {time}s.",
+        "webhook_created": "🔗 Webhook activo: {endpoint}. POST a esta URL para disparar {action}.",
+        "cron_scheduled": "⏰ Tarea programada: {task} cada {frequency}. Próxima ejecución: {next_run}.",
+        "scraping_done": "🕷️ Datos extraídos: {items} elementos de {source}. Formato: {format}.",
+        "form_created": "📝 Formulario creado: {url}. {fields} campos, tema: {theme}.",
+        "automation_error": "⚠️ Error en automatización: {error}. ¿Quieres que reintente?",
+        "browser_waiting": "🌐 Navegador abierto. Esperando: {wait_for}. Timeout: {timeout}s.",
+        "cron_list": "📋 Tareas programadas:\n{tasks_list}\n\nTotal: {count} tareas activas.",
+        "webhook_received": "🔔 Webhook recibido: {webhook_name}. Ejecutando acción configurada...",
+        "scraping_progress": "🕷️ Extrayendo datos... {progress}% - {items_found} elementos encontrados."
+      },
+      "requiredApis": [
+        {
+          "name": "internal",
+          "provider": "sistema",
+          "skills": ["browser", "webhook", "cron", "forms"],
+          "note": "Funciona siempre - sistema interno"
+        },
+        {
+          "name": "oxylabs",
+          "provider": "nosotros",
+          "skills": ["scraping"],
+          "note": "Funciona siempre - 1000 requests/mes"
+        }
+      ]
+    },
+
+    {
+      "id": "business_essentials",
+      "name": "Negocio Essentials",
+      "description": "Herramientas de negocio: facturas, reportes y notificaciones",
+      "category": "negocio",
+      "priority": 6,
+      "alwaysWorks": true,
+      "skills": [
+        "invoice_generate",
+        "report_generate",
+        "metrics_dashboard",
+        "notifications",
+        "reviews_monitor"
+      ],
+      "intents": [
+        "Genera una factura",
+        "Crea un reporte mensual",
+        "Muestra métricas del negocio",
+        "Envía notificación a",
+        "Monitorea las reseñas",
+        "Necesito un informe ejecutivo",
+        "Dashboard de KPIs",
+        "Factura para",
+        "Informe de",
+        "Reporte de ventas",
+        "Estadísticas",
+        "Métricas",
+        "Notificar",
+        "Alerta de negocio",
+        "Reseñas de",
+        "Reviews"
+      ],
+      "responses": {
+        "invoice_created": "🧾 Factura #{number} generada: {amount} {currency}. PDF listo para enviar.",
+        "report_ready": "📊 Reporte completado: {title}. {pages} páginas, {charts} gráficos.",
+        "dashboard_ready": "📈 Dashboard activo en {url}. Métricas: {metrics_count} KPIs actualizados.",
+        "notification_sent": "🔔 Notificación enviada a {recipients} destinatarios vía {channel}.",
+        "reviews_summary": "⭐ Resumen de reseñas: {avg_rating}/5 ({count} reviews). Tendencia: {trend}.",
+        "business_alert": "🚨 Alerta de negocio: {alert_type}. Requiere atención inmediata.",
+        "invoice_preview": "🧾 Vista previa:\nCliente: {client}\nConcepto: {concept}\nTotal: {total}\n\n¿Confirmas el envío?",
+        "report_schedule": "📊 Reporte programado para el {date}. Frecuencia: {frequency}.",
+        "metrics_alert": "📈 KPI en alerta:\n• {metric_name}: {metric_value} (-{decrease}%)\n\nRecomendación: {recommendation}"
+      },
+      "requiredApis": [
+        {
+          "name": "internal",
+          "provider": "sistema",
+          "skills": ["metrics_dashboard", "notifications", "reviews_monitor"],
+          "note": "Funciona siempre - sistema interno"
+        },
+        {
+          "name": "pdf_co",
+          "provider": "nosotros",
+          "skills": ["invoice_generate", "report_generate"],
+          "note": "Funciona siempre"
+        }
+      ]
+    },
+
+    {
+      "id": "voice_audio",
+      "name": "Voz & Audio",
+      "description": "Capacidades de voz y audio: transcribir, generar y procesar contenido sonoro",
+      "category": "voz",
+      "priority": 7,
+      "alwaysWorks": false,
+      "skills": [
+        "voice_receive",
+        "voice_send",
+        "audio_transcribe",
+        "audio_generate"
+      ],
+      "intents": [
+        "Escucha este voicenote",
+        "Convierte voz a texto",
+        "Genera voz con",
+        "Hazme un audio de",
+        "Transcribe la reunión",
+        "Responde con voz",
+        "Nota de voz",
+        "Audio de",
+        "Voz de",
+        "Habla con",
+        "Responde hablando",
+        "Escuchéste voicenote",
+        "Nota de voz"
+      ],
+      "responses": {
+        "voice_received": "🎙️ Mensaje de voz procesado: {duration}s. Transcripción: {text}",
+        "voice_sent": "🔊 Audio enviado: {duration}s. Voz: {voice_type}.",
+        "audio_processing": "🎧 Procesando audio... Detectado: {language}, {speakers} voces.",
+        "audio_generated": "🎵 Audio generado: {type}, {duration}s. Archivo: {filename}.",
+        "api_required": "⚠️ Para usar voz necesito OPENAI_API_KEY. Configúrala en el panel.",
+        "voice_options": "🎤 Voces disponibles:\n• Nova (femenina, clara)\n• Alloy (neutral)\n• Echo (masculina)\n• Shimmer (suave)\n\n¿Cuál prefieres?",
+        "transcription_confidence": "📝 Confianza de transcripción: {confidence}%\n\nTexto:\n{text}\n\n¿Necesitas correcciones?",
+        "audio_format": "🎵 Formato: {format}\nDuración: {duration}\nCalidad: {quality}\n\n¿Lo envío como respuesta?"
+      },
+      "requiredApis": [
+        {
+          "name": "openai_whisper",
+          "provider": "cliente",
+          "skills": ["voice_receive", "audio_transcribe"],
+          "required": true,
+          "note": "OPENAI_API_KEY requerido"
+        },
+        {
+          "name": "openai_tts",
+          "provider": "cliente",
+          "skills": ["voice_send", "audio_generate"],
+          "required": true,
+          "note": "OPENAI_API_KEY requerido"
+        }
+      ],
+      "voiceProfiles": {
+        "nova": { "language": "es", "gender": "female", "style": "claro" },
+        "alloy": { "language": "es", "gender": "neutral", "style": "natural" },
+        "echo": { "language": "es", "gender": "male", "style": "profundo" },
+        "shimmer": { "language": "es", "gender": "female", "style": "suave" }
+      }
+    },
+
+    {
+      "id": "google_workspace",
+      "name": "Google Workspace",
+      "description": "Integración con herramientas de Google: Calendar y Sheets",
+      "category": "integracion",
+      "priority": 8,
+      "alwaysWorks": false,
+      "skills": [
+        "calendar",
+        "sheets",
+        "location"
+      ],
+      "intents": [
+        "Agrega evento al calendario",
+        "Consulta mi agenda",
+        "Modifica la hoja de cálculo",
+        "¿Dónde está",
+        "Crea un sheet con",
+        "Ubicación de",
+        "Calendario",
+        "Agenda",
+        "Google Calendar",
+        "Google Sheets",
+        "Hoja de cálculo",
+        "Spreadsheet",
+        "Mapa de",
+        "Coordenadas de",
+        "Dirección de"
+      ],
+      "responses": {
+        "calendar_added": "📅 Evento creado: {title} el {date}. Recordatorio: {reminder}.",
+        "calendar_query": "📆 Tu agenda: {events_count} eventos hoy. Próximo: {next_event}.",
+        "sheet_updated": "📊 Sheet actualizado: {cells} celdas modificadas. Archivo: {filename}.",
+        "location_found": "📍 Ubicación: {place} ({distance} de ti). Coordenadas: {coords}.",
+        "oauth_required": "🔐 Necesito acceso a Google. Inicia sesión en Configuración > Google Auth.",
+        "calendar_conflict": "⚠️ Conflicto: {conflict_event} está programado a la misma hora.\n\nOpciones:\n• Mover {new_time}\n• Reemplazar evento existente\n• Cancelar",
+        "location_not_found": "📍 No encontré '{place}'. ¿Quieres sugerencias similares?\n\n{suggestions}",
+        "sheet_created": "📊 Sheet creado: {filename}\nColumnas: {columns}\nFilas iniciales: {rows}\n\nURL: {url}",
+        "calendar_list": "📅 Próximos {days} días:\n{events_list}\n\nTotal: {count} eventos."
+      },
+      "requiredApis": [
+        {
+          "name": "google_oauth",
+          "provider": "cliente",
+          "skills": ["calendar", "sheets"],
+          "required": true,
+          "note": "GOOGLE_OAUTH requerido"
+        },
+        {
+          "name": "google_maps",
+          "provider": "cliente",
+          "skills": ["location"],
+          "required": false,
+          "note": "Opcional - $200 gratis/mes"
+        }
+      ]
+    },
+
+    {
+      "id": "web_development",
+      "name": "Desarrollo Web",
+      "description": "Creación y publicación de sitios web, landing pages y formularios con Cloudflare Tunnel",
+      "category": "desarrollo",
+      "priority": 6,
+      "alwaysWorks": true,
+      "skills": [
+        "web_create",
+        "form_create",
+        "landing_page",
+        "web_publish",
+        "newsletter_send",
+        "email_templates",
+        "code_execute",
+        "git_commit"
+      ],
+      "intents": [
+        "Crea un sitio web",
+        "Hazme una landing page",
+        "Necesito un formulario",
+        "Publica esta web",
+        "Envía un newsletter",
+        "Ejecuta este código",
+        "Git commit",
+        "Crea una página web",
+        "Haz un formulario de contacto",
+        "Publicar sitio",
+        "Newsletter para clientes",
+        "Sube cambios a git",
+        "Landing page para negocio",
+        "Formulario de registro",
+        "Página de ventas",
+        "Enviar email masivo",
+        "Corre código",
+        "Commit estos cambios"
+      ],
+      "responses": {
+        "web_created": "🌐 **Sitio web creado:** {site_name}\n\n📁 Ubicación: {path}\n🔗 URL local: {local_url}\n\n✅ Listo para publicar. ¿Quieres que lo publique con Cloudflare Tunnel?",
+        "form_created": "📝 **Formulario creado:** {form_name}\n\n📋 Campos: {fields}\n📧 Envía a: {email}\n\n✅ Formulario listo. ¿Necesitas integrarlo en una web existente?",
+        "landing_created": "🎯 **Landing page creada:** {page_name}\n\n🎨 Tipo: {template_type}\n📱 Responsive: Sí\n⚡ Tiempo de carga: < 2s\n\n✅ Listo. ¿Publicamos?",
+        "web_published": "🚀 **Web publicada:**\n\n🌐 URL pública: {public_url}\n⏱️ Tiempo de publicación: {time}s\n🔒 SSL: Activado\n\n✅ Tu web está online. ¿Quieres QR para compartir?",
+        "newsletter_sent": "📧 **Newsletter enviado:**\n\n📬 Destinatarios: {count}\n📊 Abiertos: {open_rate}%\n🔗 Clicks: {click_rate}%\n\n✅ Campaña completada.",
+        "code_executed": "💻 **Código ejecutado:**\n\n⏱️ Tiempo: {execution_time}ms\n📤 Output:\n```\n{output}\n```\n\n✅ Completado sin errores.",
+        "git_committed": "📦 **Git commit realizado:**\n\n📝 Mensaje: {commit_message}\n📊 Archivos modificados: {files_count}\n🔄 Branch: {branch}\n\n✅ Cambios guardados. ¿Push al repositorio?",
+        "publish_confirm": "🚀 ¿Publicar web?\n\n📁 Archivos listos: {files_count}\n🌐 Subdominio sugerido: {subdomain}\n⏱️ Tiempo estimado: 30s\n\nResponde OK para confirmar.",
+        "template_list": "🎨 **Plantillas disponibles:**\n\n1. Landing empresarial\n2. Restaurante\n3. Hotel\n4. Tienda online\n5. Portfolio personal\n6. Blog\n7. Evento\n8. Formulario contacto\n\n¿Cuál prefieres?",
+        "error_publish": "⚠️ Error al publicar:\n\n{error}\n\n¿Quieres reintentar?",
+        "qr_for_web": "📱 **QR generado para tu web:**\n\n{qr_url}\n\nComparte este código para que accedan directamente."
+      },
+      "requiredApis": []
+    },
+
+    {
+      "id": "master_bundle",
+      "name": "Super Agente - Todo en Uno",
+      "description": "Bundle maestro con todas las habilidades del Super Agente activas simultáneamente",
+      "category": "master",
+      "priority": 99,
+      "alwaysWorks": false,
+      "skills": [
+        "email_send",
+        "email_read",
+        "pdf_generate",
+        "pdf_read",
+        "pdf_edit",
+        "doc_generate",
+        "excel_generate",
+        "excel_read",
+        "presentation_create",
+        "image_receive",
+        "video_process",
+        "video_edit",
+        "sms_send",
+        "browser",
+        "scraping",
+        "forms",
+        "cron",
+        "webhook",
+        "invoice_generate",
+        "report_generate",
+        "qrcode_generate",
+        "summarize",
+        "extract_data",
+        "sentiment",
+        "ocr",
+        "web_create",
+        "form_create",
+        "landing_page",
+        "web_publish",
+        "newsletter_send",
+        "email_templates",
+        "code_execute",
+        "git_commit"
+      ],
+      "intents": [
+        "Activa todo",
+        "Modo: Super Agente",
+        "Necesito todas las capacidades",
+        "Modo completo",
+        "Máximo poder",
+        "Super Agente ON",
+        "Power mode",
+        "Activar todo",
+        "Full capabilities",
+        "Todos los bundles"
+      ],
+      "responses": {
+        "master_activated": "🚀 **Super Agente ACTIVADO**\n\n✅ {skills_count} habilidades disponibles\n✅ {bundles_count} bundles activos\n✅ APIs: {apis_status}\n\n¿En qué puedo ayudarte?",
+        "master_status": "📊 Estado Super Agente:\n• Documentos: ✅ ({docs_count} disponibles)\n• Comunicación: ✅ ({comm_channels} canales)\n• Multimedia: ⚡ ({media_tools} herramientas)\n• Automatización: ✅ Todas activas",
+        "master_deactivated": "⚠️ Super Agente desactivado. Modo básico restaurado.",
+        "api_status": "📋 Estado de APIs:\n✅ {working_apis} funcionando\n⚠️ {partial_apis} parcialmente\n❌ {failed_apis} requieren configuración\n\nDetalles:\n{api_details}",
+        "capability_test": "🧪 Prueba de capacidades:\n{test_results}\n\n{working}/{total} habilidades operativas."
+      },
+      "requiredApis": [
+        {
+          "name": "resend",
+          "provider": "nosotros",
+          "note": "Email - siempre"
+        },
+        {
+          "name": "pdf_co",
+          "provider": "nosotros",
+          "note": "Documentos - siempre"
+        },
+        {
+          "name": "mathpix",
+          "provider": "nosotros",
+          "note": "Lectura PDF - siempre"
+        },
+        {
+          "name": "ollama",
+          "provider": "cliente",
+          "note": "Análisis - obligatorio"
+        }
+      ],
+      "subBundles": [
+        "communication_core",
+        "documents_pro",
+        "productivity_plus",
+        "automation_power",
+        "business_essentials"
+      ],
+      "optionalBundles": [
+        "multimedia_creative",
+        "voice_audio",
+        "google_workspace"
+      ]
+    }
+  ],
+
+  "contextMapping": {
+    "consultoria": {
+      "defaultBundles": ["documents_pro", "productivity_plus"],
+      "suggestedBundles": ["communication_core", "automation_power"],
+      "optionalBundles": ["voice_audio"]
+    },
+    "ecommerce": {
+      "defaultBundles": ["communication_core", "business_essentials"],
+      "suggestedBundles": ["documents_pro", "automation_power"],
+      "optionalBundles": ["multimedia_creative"]
+    },
+    "agencia": {
+      "defaultBundles": ["multimedia_creative", "documents_pro"],
+      "suggestedBundles": ["automation_power", "communication_core"],
+      "optionalBundles": ["voice_audio", "google_workspace"]
+    },
+    "inmobiliaria": {
+      "defaultBundles": ["communication_core", "documents_pro"],
+      "suggestedBundles": ["multimedia_creative", "business_essentials"],
+      "optionalBundles": ["google_workspace"]
+    },
+    "freelancer": {
+      "defaultBundles": ["productivity_plus", "documents_pro"],
+      "suggestedBundles": ["communication_core"],
+      "optionalBundles": ["voice_audio", "google_workspace"]
+    },
+    "medico": {
+      "defaultBundles": ["documents_pro", "communication_core"],
+      "suggestedBundles": ["productivity_plus"],
+      "optionalBundles": ["voice_audio"]
+    },
+    "abogado": {
+      "defaultBundles": ["documents_pro", "productivity_plus"],
+      "suggestedBundles": ["communication_core", "business_essentials"],
+      "optionalBundles": ["voice_audio", "google_workspace"]
+    },
+    "restaurante": {
+      "defaultBundles": ["communication_core", "business_essentials"],
+      "suggestedBundles": ["multimedia_creative"],
+      "optionalBundles": []
+    },
+    "coach": {
+      "defaultBundles": ["communication_core", "documents_pro"],
+      "suggestedBundles": ["voice_audio", "productivity_plus"],
+      "optionalBundles": ["automation_power"]
+    },
+    "marketing": {
+      "defaultBundles": ["multimedia_creative", "communication_core"],
+      "suggestedBundles": ["documents_pro", "automation_power"],
+      "optionalBundles": ["voice_audio", "google_workspace"]
+    }
+  },
+
+  "responseVariables": {
+    "recipient": "Destinatario del mensaje",
+    "filename": "Nombre del archivo",
+    "count": "Cantidad",
+    "time": "Tiempo transcurrido",
+    "platform": "Plataforma de comunicación",
+    "api": "API requerida",
+    "accuracy": "Porcentaje de precisión",
+    "sentiment": "Sentimiento detectado",
+    "language": "Idioma detectado",
+    "duration": "Duración en segundos",
+    "events_count": "Cantidad de eventos",
+    "phone": "Número de teléfono",
+    "pages": "Número de páginas",
+    "content_type": "Tipo de contenido",
+    "summary": "Texto resumido",
+    "format_style": "Estilo del formato",
+    "rows": "Número de filas",
+    "columns": "Número de columnas",
+    "slides": "Número de slides",
+    "template": "Plantilla utilizada",
+    "progress": "Porcentaje de progreso",
+    "eta": "Tiempo estimado de llegada",
+    "words": "Número de palabras",
+    "objects": "Objetos detectados",
+    "context": "Contexto del contenido",
+    "style": "Estilo aplicado",
+    "variations": "Variaciones disponibles",
+    "quality": "Calidad del resultado",
+    "text_preview": "Vista previa del texto",
+    "confidence": "Porcentaje de confianza",
+    "emotions": "Emociones detectadas",
+    "type": "Tipo de contenido",
+    "action": "Acción asociada",
+    "chars": "Caracteres contados",
+    "translated_text": "Texto traducido",
+    "fields": "Campos identificados",
+    "detected_lang": "Idioma detectado",
+    "fields_list": "Lista de campos",
+    "bullet_points": "Puntos clave",
+    "actions": "Acciones ejecutadas",
+    "endpoint": "URL del endpoint",
+    "task": "Tarea programada",
+    "frequency": "Frecuencia",
+    "next_run": "Próxima ejecución",
+    "items": "Elementos extraídos",
+    "source": "Fuente de datos",
+    "format": "Formato de salida",
+    "url": "URL generada",
+    "fields_count": "Cantidad de campos",
+    "theme": "Tema del formulario",
+    "error": "Mensaje de error",
+    "wait_for": "Esperando por",
+    "timeout": "Tiempo límite",
+    "tasks_list": "Lista de tareas",
+    "webhook_name": "Nombre del webhook",
+    "items_found": "Elementos encontrados",
+    "number": "Número de factura",
+    "amount": "Monto",
+    "currency": "Moneda",
+    "title": "Título del reporte",
+    "charts": "Cantidad de gráficos",
+    "metrics_count": "Cantidad de métricas",
+    "recipients": "Destinatarios",
+    "channel": "Canal de comunicación",
+    "avg_rating": "Rating promedio",
+    "trend": "Tendencia detectada",
+    "alert_type": "Tipo de alerta",
+    "client": "Nombre del cliente",
+    "concept": "Concepto de factura",
+    "total": "Total",
+    "date": "Fecha",
+    "metric_name": "Nombre de métrica",
+    "metric_value": "Valor de métrica",
+    "decrease": "Porcentaje de disminución",
+    "recommendation": "Recomendación",
+    "voice_type": "Tipo de voz",
+    "speakers": "Voces detectadas",
+    "conflict_event": "Evento en conflicto",
+    "new_time": "Nuevo horario",
+    "place": "Nombre del lugar",
+    "distance": "Distancia",
+    "coords": "Coordenadas",
+    "suggestions": "Sugerencias similares",
+    "days": "Días a mostrar",
+    "events_list": "Lista de eventos",
+    "skills_count": "Total de habilidades",
+    "bundles_count": "Total de bundles",
+    "apis_status": "Estado de APIs",
+    "working_apis": "APIs funcionando",
+    "partial_apis": "APIs parciales",
+    "failed_apis": "APIs fallidas",
+    "api_details": "Detalles de APIs",
+    "test_results": "Resultados de prueba",
+    "working": "Habilidades funcionando",
+    "total": "Total de habilidades",
+    "docs_count": "Herramientas de documentos",
+    "comm_channels": "Canales de comunicación",
+    "media_tools": "Herramientas multimedia"
+  },
+
+  "activationCommands": {
+    "list": "/bundle list",
+    "activate": "/bundle activate {bundle_id}",
+    "deactivate": "/bundle deactivate {bundle_id}",
+    "status": "/bundle status",
+    "activateAll": "/bundle activate all",
+    "deactivateAll": "/bundle deactivate all",
+    "addSkill": "/bundle add skill {bundle_id} {skill}",
+    "removeSkill": "/bundle remove skill {bundle_id} {skill}",
+    "create": "/bundle create {name} \"{description}\" {skills}",
+    "contextInfo": "/bundle context {business_type}"
+  },
+
+  "persistence": {
+    "savePath": "/home/lumen/.openclaw/workspace/turnkey-v6/phases/04-identity-fleet/",
+    "userPreferences": "bundle-preferences.json",
+    "logsPath": "bundle-activation.log",
+    "updateFrequency": "on_change"
+  },
+
+  "metrics": {
+    "trackUsage": true,
+    "trackIntents": true,
+    "trackResponses": true,
+    "trackErrors": true,
+    "reportInterval": "daily"
+  }
+}
