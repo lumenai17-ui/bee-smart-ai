@@ -23,6 +23,9 @@ export class VaultManager {
     private passphrase: string;
 
     constructor(vaultPath: string, passphrase: string) {
+        if (passphrase.length < 16) {
+            console.warn('[VaultManager] ⚠️  Passphrase is less than 16 characters — security weakened');
+        }
         this.vaultPath = vaultPath;
         this.passphrase = passphrase;
     }
@@ -151,10 +154,17 @@ export class VaultManager {
 
     /**
      * Export vault as unencrypted JSON (for backup, HANDLE WITH CARE)
+     * ⚠️  WARNING: Output contains unencrypted API keys!
      */
     exportPlain(outputPath: string): void {
+        console.warn('[VaultManager] ⚠️  Exporting UNENCRYPTED vault — handle with extreme care!');
         const providers = this.load();
         fs.writeFileSync(outputPath, JSON.stringify({ providers }, null, 2), 'utf-8');
+        try {
+            fs.chmodSync(outputPath, 0o600);
+        } catch {
+            // chmod may not work on Windows
+        }
     }
 
     /**

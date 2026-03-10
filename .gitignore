@@ -1,31 +1,37 @@
-# ═══════════════════════════════════════════
+# ═══════════════════════════════════════
 # BEE Smart AI — .gitignore
-# ═══════════════════════════════════════════
+# ═══════════════════════════════════════
 
-# Credentials (NEVER commit)
+# Secrets & credentials
 config/.env
-config/.env.*
-!config/.env.template
-vaults/*.vault.json
-
-# Node
-node_modules/
-dist/
-*.tgz
-
-# Logs
-logs/
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
+vaults/
+*.vault.json
 
 # Runtime data
 data/
 *.sqlite
-*.db
+*.sqlite-wal
+*.sqlite-shm
+
+# Build output
+dist/
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Temp
+tmp/
+.tmp/

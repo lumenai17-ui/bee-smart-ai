@@ -87,7 +87,8 @@ export class ContactDatabase {
     }
 
     findByUsername(channel: string, username: string): Contact | null {
-        const row = this.db.prepare('SELECT * FROM contacts WHERE username = ? AND channels_used LIKE ?').get(username, `%${channel}%`) as any;
+        const escapedChannel = this.escapeLike(channel);
+        const row = this.db.prepare('SELECT * FROM contacts WHERE username = ? AND channels_used LIKE ?').get(username, `%${escapedChannel}%`) as any;
         return row ? this.rowToContact(row) : null;
     }
 
@@ -107,12 +108,21 @@ export class ContactDatabase {
         );
     }
 
+    private static readonly ALLOWED_COLUMNS = new Set([
+        'phone', 'email', 'username', 'display_name', 'first_seen',
+        'last_interaction', 'channels_used', 'preferred_channel', 'language',
+        'current_topic', 'summary', 'intent_history', 'handoff_status',
+        'handoff_operator', 'satisfaction_score', 'tags', 'custom_fields',
+        'total_interactions'
+    ]);
+
     updateContact(contactId: string, updates: Partial<Record<string, any>>): void {
         const fields: string[] = [];
         const values: any[] = [];
 
         for (const [key, value] of Object.entries(updates)) {
             const col = this.camelToSnake(key);
+            if (!ContactDatabase.ALLOWED_COLUMNS.has(col)) continue; // Skip unknown columns
             fields.push(`${col} = ?`);
             values.push(typeof value === 'object' ? JSON.stringify(value) : value);
         }
@@ -123,19 +133,26 @@ export class ContactDatabase {
         this.db.prepare(`UPDATE contacts SET ${fields.join(', ')} WHERE contact_id = ?`).run(...values);
     }
 
+    private static readonly ALLOWED_ORDER_BY = new Set([
+        'last_interaction', 'display_name', 'first_seen', 'total_interactions', 'satisfaction_score'
+    ]);
+
     listContacts(page: number = 1, pageSize: number = 50, orderBy: string = 'last_interaction'): { contacts: Contact[], total: number } {
+        const safeOrder = ContactDatabase.ALLOWED_ORDER_BY.has(orderBy) ? orderBy : 'last_interaction';
+        const safePageSize = Math.min(Math.max(1, pageSize), 200);
         const total = (this.db.prepare('SELECT COUNT(*) as count FROM contacts').get() as any).count;
-        const offset = (page - 1) * pageSize;
-        const rows = this.db.prepare(`SELECT * FROM contacts ORDER BY ${orderBy} DESC LIMIT ? OFFSET ?`).all(pageSize, offset) as any[];
+        const offset = (page - 1) * safePageSize;
+        const rows = this.db.prepare(`SELECT * FROM contacts ORDER BY ${safeOrder} DESC LIMIT ? OFFSET ?`).all(safePageSize, offset) as any[];
         return { contacts: rows.map(r => this.rowToContact(r)), total };
     }
 
     searchContacts(query: string): Contact[] {
+        const escaped = this.escapeLike(query);
         const rows = this.db.prepare(`
       SELECT * FROM contacts
       WHERE display_name LIKE ? OR phone LIKE ? OR email LIKE ? OR summary LIKE ?
       ORDER BY last_interaction DESC LIMIT 20
-    `).all(`%${query}%`, `%${query}%`, `%${query}%`, `%${query}%`) as any[];
+    `).all(`%${escaped}%`, `%${escaped}%`, `%${escaped}%`, `%${escaped}%`) as any[];
         return rows.map(r => this.rowToContact(r));
     }
 
@@ -283,7 +300,7 @@ export class ContactDatabase {
             displayName: row.display_name,
             firstSeen: row.first_seen,
             lastInteraction: row.last_interaction,
-            channelsUsed: JSON.parse(row.channels_used || '[]'),
+            channelsUsed: this.safeJsonParse(row.channels_used || '[]', []),
             preferredChannel: row.preferred_channel || '',
             language: row.language || 'es'
         };
@@ -297,12 +314,23 @@ export class ContactDatabase {
             channel: row.channel,
             text: row.text,
             timestamp: row.timestamp,
-            metadata: JSON.parse(row.metadata || '{}')
+            metadata: this.safeJsonParse(row.metadata || '{}', {})
         };
     }
 
     private camelToSnake(str: string): string {
         return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+    }
+
+    /** Escape special LIKE characters to prevent pattern injection */
+    private escapeLike(str: string): string {
+        return str.replace(/[%_\\]/g, char => `\\${char}`);
+    }
+
+    /** Safe JSON.parse with fallback */
+    private safeJsonParse<T>(str: string, fallback: T): T {
+        try { return JSON.parse(str); }
+        catch { return fallback; }
     }
 
     // ═══════════════════════════════════════
