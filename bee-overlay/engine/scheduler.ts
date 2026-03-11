@@ -141,14 +141,133 @@ export class AutomationScheduler {
         task.runCount++;
 
         try {
-            // TODO: Execute the automation's skill chain
-            // This would call the skills specified in skills_required
+            // 1. Load the AUTOMATION.md workflow from the automation's directory
+            const workflowMd = this.loadAutomationWorkflow(task.automation);
+            if (!workflowMd) {
+                throw new Error(`No AUTOMATION.md found for ${autoId}`);
+            }
+
+            // 2. Compose structured prompt for the agent
+            const prompt = this.composeAutomationPrompt(task.automation, workflowMd);
+
+            // 3. Dispatch as an internal agent task
+            const result = await this.dispatchAgentTask(task.automation, prompt);
+
+            // 4. Log result
+            this.logExecution(task.automation, result);
+
             task.status = 'scheduled';
             task.nextRun = new Date(Date.now() + this.cronToMs(task.automation.schedule.expression));
         } catch (err: any) {
             task.status = 'error';
             task.lastError = err.message;
+            this.logExecution(task.automation, { success: false, error: err.message });
         }
+    }
+
+    /** Load the AUTOMATION.md workflow file for an automation */
+    private loadAutomationWorkflow(auto: AutomationConfig): string | null {
+        const autoDir = path.join(this.rootDir, 'bee-automations');
+        if (!fs.existsSync(autoDir)) return null;
+
+        const categories = fs.readdirSync(autoDir).filter(f =>
+            fs.statSync(path.join(autoDir, f)).isDirectory()
+        );
+
+        for (const category of categories) {
+            const catDir = path.join(autoDir, category);
+            const entries = fs.readdirSync(catDir).filter(f =>
+                fs.statSync(path.join(catDir, f)).isDirectory()
+            );
+
+            for (const entry of entries) {
+                const configPath = path.join(catDir, entry, 'automation.json');
+                const workflowPath = path.join(catDir, entry, 'AUTOMATION.md');
+                if (fs.existsSync(configPath) && fs.existsSync(workflowPath)) {
+                    try {
+                        const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+                        if (config.id === auto.id) {
+                            return fs.readFileSync(workflowPath, 'utf-8');
+                        }
+                    } catch { /* skip */ }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /** Compose a structured prompt from automation config + workflow */
+    private composeAutomationPrompt(auto: AutomationConfig, workflowMd: string): string {
+        const skillsList = auto.skills_required.length > 0
+            ? `Use the following skills: ${auto.skills_required.join(', ')}`
+            : 'Use the appropriate skills from your available set';
+
+        const configSection = Object.keys(auto.config).length > 0
+            ? `\n## Configuration\n${JSON.stringify(auto.config, null, 2)}`
+            : '';
+
+        return [
+            `# Automation Task: ${auto.name}`,
+            ``,
+            `You are executing the scheduled automation "${auto.name}" (${auto.id}).`,
+            `${auto.description}`,
+            ``,
+            `## Skills to Use`,
+            skillsList,
+            configSection,
+            ``,
+            `## Workflow`,
+            workflowMd,
+            ``,
+            `## Execution Rules`,
+            `- Execute each step in order`,
+            `- If a step fails, log the error and continue to the next step if possible`,
+            `- Report the final status: which steps succeeded, which failed`,
+            `- Do NOT ask for user confirmation — this is an automated task`,
+        ].join('\n');
+    }
+
+    /** Dispatch the composed prompt as an internal agent task */
+    private async dispatchAgentTask(
+        auto: AutomationConfig,
+        prompt: string
+    ): Promise<{ success: boolean; output?: string; error?: string }> {
+        // The agent task queue processes this prompt using the LLM + tools
+        // In production, this sends to the OpenClaw agent's internal task queue
+        const taskFile = path.join(this.rootDir, '.bee-tasks', `${auto.id}-${Date.now()}.md`);
+        const taskDir = path.dirname(taskFile);
+
+        if (!fs.existsSync(taskDir)) {
+            fs.mkdirSync(taskDir, { recursive: true });
+        }
+
+        fs.writeFileSync(taskFile, prompt, 'utf-8');
+
+        return { success: true, output: `Task queued: ${taskFile}` };
+    }
+
+    /** Log automation execution */
+    private logExecution(
+        auto: AutomationConfig,
+        result: { success: boolean; output?: string; error?: string }
+    ): void {
+        const logDir = path.join(this.rootDir, '.bee-logs', 'automations');
+        if (!fs.existsSync(logDir)) {
+            fs.mkdirSync(logDir, { recursive: true });
+        }
+
+        const logEntry = {
+            timestamp: new Date().toISOString(),
+            automationId: auto.id,
+            automationName: auto.name,
+            success: result.success,
+            output: result.output,
+            error: result.error,
+        };
+
+        const logFile = path.join(logDir, `${auto.id}.log`);
+        fs.appendFileSync(logFile, JSON.stringify(logEntry) + '\n', 'utf-8');
     }
 
     /** Stop all automations */

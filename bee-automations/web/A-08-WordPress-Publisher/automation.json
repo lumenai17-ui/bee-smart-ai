@@ -1,17 +1,20 @@
-﻿{
+{
   "id": "A-08",
   "name": "WordPress Publisher",
-  "description": "Publish content to WordPress sites",
+  "description": "Auto-generate and publish blog posts to WordPress sites via the REST API",
   "category": "web",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
-  "providers_required": [],
-  "tier_minimum": "basic",
-  "config": {}
+  "schedule": { "type": "cron", "expression": "0 10 * * 3", "_comment": "Weekly on Wednesday at 10am" },
+  "skills_required": ["web-create", "rewrite", "image-generate", "webhook-send"],
+  "providers_required": ["wordpress_api"],
+  "tier_minimum": "pro",
+  "config": {
+    "wordpress_url": "",
+    "wordpress_user": "",
+    "wordpress_app_password": "",
+    "default_category": "blog",
+    "default_status": "draft",
+    "featured_image": true
+  }
 }

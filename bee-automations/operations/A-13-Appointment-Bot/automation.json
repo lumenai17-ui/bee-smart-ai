@@ -1,17 +1,20 @@
-﻿{
+{
   "id": "A-13",
   "name": "Appointment Bot",
-  "description": "Manage appointments and reservations",
+  "description": "Manage appointment scheduling: confirm bookings, send reminders, handle cancellations via WhatsApp",
   "category": "operations",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
-  "providers_required": [],
+  "schedule": { "type": "cron", "expression": "*/30 * * * *", "_comment": "Every 30 minutes" },
+  "skills_required": ["calendar-manage", "whatsapp-send", "reminder-set", "memory-search"],
+  "providers_required": ["google_calendar", "whatsapp"],
   "tier_minimum": "basic",
-  "config": {}
+  "config": {
+    "reminder_hours_before": [24, 2],
+    "business_hours": { "start": "09:00", "end": "18:00" },
+    "slot_duration_minutes": 30,
+    "max_daily_appointments": 20,
+    "confirmation_message": "✅ Tu cita está confirmada para {date} a las {time}. ¡Te esperamos!",
+    "reminder_message": "👋 Recordatorio: tienes cita {when}. ¿Confirmas asistencia?"
+  }
 }

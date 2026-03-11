@@ -1,17 +1,24 @@
-﻿{
+{
   "id": "A-06",
   "name": "Lead Capture",
-  "description": "Capture and qualify leads from conversations",
+  "description": "Capture leads from conversations, extract contact info, classify intent, and store in CRM pipeline",
   "category": "marketing",
   "version": "1.0.0",
   "enabled": false,
   "schedule": {
     "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
+    "expression": "0 * * * *",
+    "_comment": "Every hour"
   },
-  "skills_required": [],
+  "skills_required": ["extract-data", "classify", "memory-search", "email-send", "notification-send"],
   "providers_required": [],
   "tier_minimum": "basic",
-  "config": {}
+  "config": {
+    "channels_to_scan": ["whatsapp", "telegram", "email"],
+    "lead_fields": ["name", "email", "phone", "company", "interest"],
+    "auto_reply": true,
+    "auto_reply_template": "¡Gracias por tu interés! Un asesor se pondrá en contacto contigo pronto.",
+    "notify_operator": true,
+    "score_threshold": 50
+  }
 }

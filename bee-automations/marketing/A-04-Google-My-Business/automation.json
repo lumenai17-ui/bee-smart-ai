@@ -1,17 +1,25 @@
-﻿{
+{
   "id": "A-04",
   "name": "Google My Business",
-  "description": "Manage Google My Business profile and posts",
+  "description": "Monitor and manage Google Business Profile: track reviews, respond automatically, update business info, and publish posts",
   "category": "marketing",
   "version": "1.0.0",
   "enabled": false,
   "schedule": {
     "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
+    "expression": "0 8 * * *",
+    "_comment": "Daily at 8am"
   },
-  "skills_required": [],
-  "providers_required": [],
-  "tier_minimum": "basic",
-  "config": {}
+  "skills_required": ["web-scraping", "review-monitor", "review-respond", "sentiment-analysis", "notification-send"],
+  "providers_required": ["google_business"],
+  "tier_minimum": "pro",
+  "config": {
+    "business_name": "",
+    "location_id": "",
+    "auto_respond_positive": true,
+    "auto_respond_negative": false,
+    "negative_alert_channel": "whatsapp",
+    "response_tone": "agradecido y profesional",
+    "min_rating_auto_respond": 4
+  }
 }

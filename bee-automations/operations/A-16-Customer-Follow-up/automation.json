@@ -1,17 +1,19 @@
-﻿{
+{
   "id": "A-16",
   "name": "Customer Follow-up",
-  "description": "Automated customer follow-up messages",
+  "description": "Automatically follow up with customers who haven't been contacted in a configured period",
   "category": "operations",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
-  "providers_required": [],
+  "schedule": { "type": "cron", "expression": "0 10 * * 1-5", "_comment": "Weekdays at 10am" },
+  "skills_required": ["memory-search", "whatsapp-send", "email-send", "summarize"],
+  "providers_required": ["whatsapp"],
   "tier_minimum": "basic",
-  "config": {}
+  "config": {
+    "inactivity_days": 7,
+    "max_followups_per_day": 10,
+    "followup_channel": "whatsapp",
+    "message_template": "¡Hola {name}! Esperamos que todo esté bien. ¿Hay algo en lo que podamos ayudarte?",
+    "exclude_tags": ["churned", "do-not-contact"]
+  }
 }

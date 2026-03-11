@@ -1,17 +1,20 @@
-﻿{
+{
   "id": "A-11",
   "name": "Newsletter Auto",
-  "description": "Auto-generate and send newsletters",
+  "description": "Auto-generate weekly newsletters from content, metrics, and highlights, then send to subscriber list",
   "category": "web",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
-  "providers_required": [],
+  "schedule": { "type": "cron", "expression": "0 10 * * 5", "_comment": "Every Friday at 10am" },
+  "skills_required": ["newsletter-create", "email-template", "report-generate", "summarize"],
+  "providers_required": ["resend"],
   "tier_minimum": "basic",
-  "config": {}
+  "config": {
+    "newsletter_name": "",
+    "from_email": "",
+    "subscriber_list": [],
+    "sections": ["highlights", "metrics", "tips", "cta"],
+    "max_articles": 5,
+    "language": "es"
+  }
 }

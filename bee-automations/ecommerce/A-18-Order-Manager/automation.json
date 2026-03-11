@@ -1,17 +1,19 @@
-﻿{
+{
   "id": "A-18",
   "name": "Order Manager",
-  "description": "Track and manage customer orders",
+  "description": "Process incoming orders, send confirmations, update status, and notify on fulfillment",
   "category": "ecommerce",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
-  "providers_required": [],
-  "tier_minimum": "basic",
-  "config": {}
+  "schedule": { "type": "cron", "expression": "*/15 * * * *", "_comment": "Every 15 minutes" },
+  "skills_required": ["extract-data", "whatsapp-send", "notification-send", "email-send"],
+  "providers_required": ["whatsapp"],
+  "tier_minimum": "pro",
+  "config": {
+    "order_statuses": ["received", "confirmed", "preparing", "shipped", "delivered"],
+    "auto_confirm": true,
+    "notify_customer_on": ["confirmed", "shipped", "delivered"],
+    "notify_operator_on": ["received"],
+    "confirmation_message": "✅ Pedido #{order_id} confirmado. Te avisaremos cuando esté en camino."
+  }
 }

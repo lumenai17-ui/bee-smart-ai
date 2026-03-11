@@ -19,8 +19,8 @@ export interface HttpResponse {
     body: any;
 }
 
-export function createContextApiRoutes(plugin: UnifiedContextPlugin): Map<string, (req: HttpRequest) => HttpResponse> {
-    const routes = new Map<string, (req: HttpRequest) => HttpResponse>();
+export function createContextApiRoutes(plugin: UnifiedContextPlugin): Map<string, (req: HttpRequest) => HttpResponse | Promise<HttpResponse>> {
+    const routes = new Map<string, (req: HttpRequest) => HttpResponse | Promise<HttpResponse>>();
 
     // ── GET /api/contacts ────────────────────
     // List all contacts with pagination

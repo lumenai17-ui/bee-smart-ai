@@ -1,17 +1,20 @@
-﻿{
+{
   "id": "A-15",
   "name": "Daily Report",
-  "description": "Generate and send daily business reports",
+  "description": "Generate and deliver daily business performance reports with KPIs, trends, and action items",
   "category": "operations",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
-  "providers_required": [],
+  "schedule": { "type": "cron", "expression": "0 9 * * *", "_comment": "Daily at 9am" },
+  "skills_required": ["report-generate", "email-send", "summarize", "memory-search"],
+  "providers_required": ["resend"],
   "tier_minimum": "basic",
-  "config": {}
+  "config": {
+    "report_name": "Reporte Diario",
+    "recipients": [],
+    "metrics": ["conversations", "leads", "sales", "satisfaction"],
+    "include_chart": true,
+    "compare_period": "yesterday",
+    "delivery_channel": "email"
+  }
 }

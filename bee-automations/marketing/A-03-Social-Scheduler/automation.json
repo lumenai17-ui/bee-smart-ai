@@ -1,17 +1,22 @@
-﻿{
+{
   "id": "A-03",
   "name": "Social Scheduler",
-  "description": "Schedule posts across multiple social platforms",
+  "description": "Schedule and auto-publish social media posts at optimal times across platforms",
   "category": "marketing",
   "version": "1.0.0",
   "enabled": false,
   "schedule": {
     "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
+    "expression": "0 8 * * 1,3,5",
+    "_comment": "Monday, Wednesday, Friday at 8am"
   },
-  "skills_required": [],
+  "skills_required": ["cron-schedule", "image-generate", "web-create", "webhook-send"],
   "providers_required": [],
   "tier_minimum": "basic",
-  "config": {}
+  "config": {
+    "platforms": ["instagram", "facebook"],
+    "optimal_times": { "instagram": "12:00", "facebook": "09:00" },
+    "content_queue_path": "./output/posts/",
+    "auto_publish": false
+  }
 }

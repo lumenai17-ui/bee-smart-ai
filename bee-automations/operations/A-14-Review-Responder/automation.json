@@ -1,17 +1,19 @@
-﻿{
+{
   "id": "A-14",
   "name": "Review Responder",
-  "description": "Auto-respond to business reviews",
+  "description": "Monitor all review platforms, analyze sentiment, and auto-respond to customer reviews",
   "category": "operations",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
-  "providers_required": [],
-  "tier_minimum": "basic",
-  "config": {}
+  "schedule": { "type": "cron", "expression": "0 */6 * * *", "_comment": "Every 6 hours" },
+  "skills_required": ["review-monitor", "review-respond", "sentiment-analysis", "notification-send"],
+  "providers_required": ["google_business"],
+  "tier_minimum": "pro",
+  "config": {
+    "platforms": ["google", "yelp"],
+    "auto_respond_min_rating": 4,
+    "escalate_max_rating": 2,
+    "response_tone": "agradecido y profesional",
+    "escalation_channel": "whatsapp"
+  }
 }

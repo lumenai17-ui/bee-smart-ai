@@ -1,17 +1,20 @@
-﻿{
+{
   "id": "A-09",
   "name": "Blog Autopilot",
-  "description": "Auto-generate and publish blog posts",
+  "description": "Research topics, generate SEO blog posts, and maintain a content calendar automatically",
   "category": "web",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
-  "providers_required": [],
-  "tier_minimum": "basic",
-  "config": {}
+  "schedule": { "type": "cron", "expression": "0 9 * * 2,4", "_comment": "Tuesday and Thursday at 9am" },
+  "skills_required": ["web-search", "summarize", "rewrite", "web-create", "image-generate"],
+  "providers_required": ["serpapi", "openai"],
+  "tier_minimum": "pro",
+  "config": {
+    "industry": "",
+    "target_audience": "",
+    "articles_per_week": 2,
+    "word_count": 1200,
+    "language": "es",
+    "output_dir": "./output/blog/"
+  }
 }

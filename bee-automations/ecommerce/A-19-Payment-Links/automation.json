@@ -1,17 +1,19 @@
-﻿{
+{
   "id": "A-19",
   "name": "Payment Links",
-  "description": "Generate and send payment links via Stripe",
+  "description": "Generate payment links, QR codes, and send payment requests to customers on demand",
   "category": "ecommerce",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
-  "providers_required": [],
+  "schedule": { "type": "cron", "expression": "0 0 31 2 *", "_comment": "On-demand only" },
+  "skills_required": ["qr-generate", "whatsapp-send", "email-send", "invoice-generate"],
+  "providers_required": ["stripe"],
   "tier_minimum": "basic",
-  "config": {}
+  "config": {
+    "payment_provider": "stripe",
+    "currency": "MXN",
+    "include_qr": true,
+    "include_invoice": true,
+    "payment_methods": ["card", "oxxo", "spei"]
+  }
 }

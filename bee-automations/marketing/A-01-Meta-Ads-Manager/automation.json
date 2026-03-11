@@ -1,17 +1,24 @@
-﻿{
+{
   "id": "A-01",
   "name": "Meta Ads Manager",
-  "description": "Automated Meta/Facebook ads campaign management",
+  "description": "Monitor Meta/Facebook ad campaigns, extract performance metrics, generate reports, and alert on underperforming ads",
   "category": "marketing",
   "version": "1.0.0",
   "enabled": false,
   "schedule": {
     "type": "cron",
     "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
+    "_comment": "Daily at 9am"
   },
-  "skills_required": [],
-  "providers_required": [],
-  "tier_minimum": "basic",
-  "config": {}
+  "skills_required": ["web-scraping", "report-generate", "notification-send", "summarize"],
+  "providers_required": ["meta_graph_api"],
+  "tier_minimum": "pro",
+  "config": {
+    "meta_ad_account_id": "",
+    "metrics": ["impressions", "clicks", "ctr", "spend", "conversions", "cpa"],
+    "alert_threshold_ctr": 0.5,
+    "alert_threshold_cpa": 50,
+    "report_recipients": [],
+    "currency": "MXN"
+  }
 }

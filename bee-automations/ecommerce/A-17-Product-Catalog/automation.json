@@ -1,17 +1,20 @@
-﻿{
+{
   "id": "A-17",
   "name": "Product Catalog",
-  "description": "Manage product catalog and listings",
+  "description": "Maintain and update product catalogs: sync inventory, update prices, and generate catalog exports",
   "category": "ecommerce",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
+  "schedule": { "type": "cron", "expression": "0 6 * * 1", "_comment": "Weekly on Monday at 6am" },
+  "skills_required": ["web-scraping", "excel-generate", "image-edit", "pdf-generate"],
   "providers_required": [],
-  "tier_minimum": "basic",
-  "config": {}
+  "tier_minimum": "pro",
+  "config": {
+    "catalog_source": "",
+    "output_formats": ["xlsx", "pdf"],
+    "include_images": true,
+    "price_currency": "MXN",
+    "categories": [],
+    "output_dir": "./output/catalogs/"
+  }
 }

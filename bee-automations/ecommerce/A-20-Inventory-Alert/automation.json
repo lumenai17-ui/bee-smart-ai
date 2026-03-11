@@ -1,17 +1,20 @@
-﻿{
+{
   "id": "A-20",
   "name": "Inventory Alert",
-  "description": "Monitor inventory levels and send alerts",
+  "description": "Monitor inventory levels and send alerts when stock is low or depleted",
   "category": "ecommerce",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
+  "schedule": { "type": "cron", "expression": "0 */6 * * *", "_comment": "Every 6 hours" },
+  "skills_required": ["excel-read", "notification-send", "email-send", "report-generate"],
   "providers_required": [],
   "tier_minimum": "basic",
-  "config": {}
+  "config": {
+    "inventory_source": "",
+    "low_stock_threshold": 10,
+    "critical_stock_threshold": 3,
+    "alert_channel": "whatsapp",
+    "daily_report": true,
+    "reorder_notify": true
+  }
 }

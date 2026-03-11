@@ -1,17 +1,25 @@
-﻿{
+{
   "id": "A-02",
   "name": "Post Creator",
-  "description": "Generate and schedule social media posts",
+  "description": "Generate social media posts with AI-created images and copy, optimized for each platform",
   "category": "marketing",
   "version": "1.0.0",
   "enabled": false,
   "schedule": {
     "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
+    "expression": "0 10 * * *",
+    "_comment": "Daily at 10am"
   },
-  "skills_required": [],
-  "providers_required": [],
+  "skills_required": ["image-generate", "rewrite", "web-search", "summarize"],
+  "providers_required": ["openai"],
   "tier_minimum": "basic",
-  "config": {}
+  "config": {
+    "platforms": ["instagram", "facebook", "twitter"],
+    "brand_tone": "profesional pero cercano",
+    "brand_colors": ["#1a1a2e", "#e94560"],
+    "posts_per_day": 1,
+    "topics_source": "trending_industry",
+    "language": "es",
+    "hashtag_count": 5
+  }
 }

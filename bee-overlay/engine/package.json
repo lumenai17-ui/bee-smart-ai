@@ -1,0 +1,17 @@
+{
+    "name": "bee-overlay-engine",
+    "version": "2.0.0",
+    "description": "BEE Smart AI Overlay Engine — branding, tiers, scheduling, boot",
+    "main": "dist/boot.js",
+    "types": "dist/boot.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "clean": "rmdir /s /q dist 2>nul || true"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "typescript": "^5.4.0",
+        "@types/node": "^20.0.0"
+    }
+}

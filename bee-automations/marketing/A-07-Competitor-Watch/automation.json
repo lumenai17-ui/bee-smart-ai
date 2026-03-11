@@ -1,17 +1,25 @@
-﻿{
+{
   "id": "A-07",
   "name": "Competitor Watch",
-  "description": "Monitor competitor activity and pricing",
+  "description": "Monitor competitor websites, social media, and pricing for strategic intelligence",
   "category": "marketing",
   "version": "1.0.0",
   "enabled": false,
   "schedule": {
     "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
+    "expression": "0 7 * * *",
+    "_comment": "Daily at 7am"
   },
-  "skills_required": [],
+  "skills_required": ["web-scraping", "summarize", "notification-send", "report-generate"],
   "providers_required": [],
-  "tier_minimum": "basic",
-  "config": {}
+  "tier_minimum": "pro",
+  "config": {
+    "competitors": [],
+    "monitor_urls": [],
+    "track_prices": true,
+    "track_social": true,
+    "track_reviews": true,
+    "alert_on_changes": true,
+    "report_frequency": "daily"
+  }
 }

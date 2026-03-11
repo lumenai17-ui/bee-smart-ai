@@ -1,17 +1,22 @@
-﻿{
+{
   "id": "A-12",
   "name": "Invoice Autopilot",
-  "description": "Auto-generate and send invoices",
+  "description": "Auto-generate invoices from completed orders/services and send to clients via email",
   "category": "operations",
   "version": "1.0.0",
   "enabled": false,
-  "schedule": {
-    "type": "cron",
-    "expression": "0 9 * * *",
-    "_comment": "Default: daily at 9am, customize per client"
-  },
-  "skills_required": [],
-  "providers_required": [],
+  "schedule": { "type": "cron", "expression": "0 18 * * 1-5", "_comment": "Weekdays at 6pm" },
+  "skills_required": ["invoice-generate", "email-send", "pdf-generate", "extract-data"],
+  "providers_required": ["resend"],
   "tier_minimum": "basic",
-  "config": {}
+  "config": {
+    "business_name": "",
+    "business_rfc": "",
+    "business_address": "",
+    "tax_rate": 0.16,
+    "currency": "MXN",
+    "invoice_prefix": "FAC",
+    "auto_send": true,
+    "payment_terms_days": 30
+  }
 }
